@@ -1,0 +1,4 @@
+-->Put all your code in this folder for Frontend->@Anuraj
+-->I will create a rails app in the same directory as the Main Frontend Directory
+-->Work will start once the DB structure is finalized for the inital stage
+--> Sip_Clone wala folder rails app ka hai... matlab backend
