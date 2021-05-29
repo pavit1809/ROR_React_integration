@@ -1,7 +1,6 @@
 import React from "react";
 import { Form, Input, Button, DatePicker, Divider, message } from "antd";
 import moment from "moment";
-// import bgImg from "../../Assets/bgimg.jpg";
 import { RightOutlined } from "@ant-design/icons";
 
 export default function PersonalForm(props) {
@@ -16,6 +15,11 @@ export default function PersonalForm(props) {
     }
   };
 
+  const disabledDate = (value) => {
+    const maxDate = moment().subtract(18, "years");
+    return value > maxDate;
+  };
+
   React.useEffect(() => {
     message.success("Fill in the details and be a part of something amazing.");
   }, []);
@@ -25,7 +29,6 @@ export default function PersonalForm(props) {
       style={{
         width: "100vw",
         height: "100vh",
-        background: `url("../../Assets/bgimg.jpg") no-repeat`,
         backgroundSize: "100vw 100vh",
         paddingTop: "20vh",
       }}
@@ -42,7 +45,7 @@ export default function PersonalForm(props) {
       >
         <Divider style={{ fontSize: "2vw" }}>Personal Details</Divider>
         <Form
-          form={form}
+          // form={form}
           style={{ margin: "4vw 10vw 8vw 0 " }}
           size="large"
           labelCol={{ span: 10 }}
@@ -53,7 +56,7 @@ export default function PersonalForm(props) {
             dob: props.values["DOB"]
               ? moment(props.values["DOB"], "YYYY-MM-DD")
               : null,
-            college: props.values["college"],
+            pan: props.values["pan"],
           }}
         >
           <Form.Item
@@ -84,28 +87,34 @@ export default function PersonalForm(props) {
           >
             <DatePicker
               value={
-                props.values["DOB"]
-                  ? moment(props.values["DOB"], "YYYY-MM-DD")
+                props.values["dob"]
+                  ? moment(props.values["dob"], "YYYY-MM-DD")
                   : null
               }
-              onChange={props.handleChange("DOB")}
+              disabledDate={disabledDate}
+              showToday={false}
+              onChange={props.handleChange("dob")}
               placeholder="When were you born"
             />
           </Form.Item>
           <Form.Item
-            name="college"
-            label="College"
+            name="pan card"
+            label="Pan Card Number"
             rules={[
               {
                 required: true,
-                message: "Please input your college name!",
+                message: "Please input your pan card number!",
+              },
+              {
+              validator: (_, value) =>
+              value.length==10 ? Promise.resolve() : Promise.reject(new Error('Pan card should have 10 characters')),
               },
             ]}
           >
             <Input
-              value={props.values["college"]}
-              onChange={props.handleChange("college")}
-              placeholder="Enter your college name"
+              value={props.values["pan"]}
+              onChange={props.handleChange("pan")}
+              placeholder="Enter your pan card details"
             />
           </Form.Item>
           <Form.Item label="Press to advance">

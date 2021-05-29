@@ -24,9 +24,15 @@ export default function StepForm() {
 
   const submit = async () => {
     console.log(values);
-    router.push("/");
-    setStep(0);
-    setValues({});
+    // await Axios.post("http://localhost:5000/user/login", user)
+    //   .then((res) => {
+        router.push("/");
+        setStep(0);
+        setValues({});
+    //   })
+    //   .catch((err) => {
+    //     console.log("Axios", err.response.data);
+    //   });
   };
 
   // Handle fields change

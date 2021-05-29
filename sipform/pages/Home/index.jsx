@@ -1,6 +1,5 @@
 import React from "react";
 import { Button } from "antd";
-import bgImg from "../../Assets/bgimg.jpg";
 import Navbar from "../../Components/Navbar";
 
 export default class Home extends React.Component {
@@ -11,7 +10,6 @@ export default class Home extends React.Component {
         style={{
           width: "100vw",
           height: "100vh",
-          background: `url(${bgImg}) no-repeat`,
           backgroundSize: "100%",
         }}
       >

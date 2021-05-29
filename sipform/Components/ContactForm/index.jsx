@@ -7,11 +7,10 @@ import {
   Divider,
   Modal,
   Alert,
-  message, 
+  message,
 } from "antd";
 import allStateDistrictData from "../../Assets/city-state-data.json";
 import statesData from "../../Assets/state-data.json";
-// import bgImg from "../../Assets/bgimg.jpg";
 import { LeftOutlined, LoginOutlined } from "@ant-design/icons";
 
 export default function ContactForm(props) {
@@ -83,7 +82,6 @@ export default function ContactForm(props) {
       style={{
         width: "100vw",
         height: "100vh",
-        // background: `url("../../Assets/bgimg.jpg") no-repeat`,
         backgroundSize: "100vw 100vh",
         paddingTop: "20vh",
       }}
@@ -122,7 +120,7 @@ export default function ContactForm(props) {
       >
         <Divider style={{ fontSize: "2vw" }}>Contact Details</Divider>
         <Form
-          form={form}
+          // form={form}
           style={{ margin: "4vw 10vw 8vw 0 " }}
           size="large"
           labelCol={{ span: 10 }}
@@ -132,6 +130,7 @@ export default function ContactForm(props) {
             address: props.values["address"],
             state: props.values["state"],
             city: props.values["city"],
+            phno: props.values["phno"],
           }}
         >
           <Form.Item
@@ -189,6 +188,28 @@ export default function ContactForm(props) {
             >
               {displayDistricts}
             </Select>
+          </Form.Item>
+          <Form.Item
+            name="phone"
+            label="Phone Number"
+            rules={[
+              {
+                required: true,
+                message: "Please input your phone number!",
+              },
+              {
+                validator: (_, value) =>
+                  value.length == 10
+                    ? Promise.resolve()
+                    : Promise.reject(new Error("Phone should have 10 digits")),
+              },
+            ]}
+          >
+            <Input
+              value={props.values["phno"]}
+              onChange={props.handleChange("phno")}
+              placeholder="Enter your phone details"
+            />
           </Form.Item>
           <Form.Item label="Wanna recheck something">
             <Button

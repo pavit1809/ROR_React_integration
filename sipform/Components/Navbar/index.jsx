@@ -26,7 +26,7 @@ export default function Navbar(props) {
       <Menu.Item
         key="home"
         icon={<HomeOutlined />}
-        onClick={() => history.push("/")}
+        onClick={() => router.push("/")}
         style={{ cursor: "pointer" }}
       >
         Home

@@ -1,7 +1,6 @@
 import React from "react";
 import { Form, Input, Button, Divider, message } from "antd";
 import { EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons";
-// import bgImg from "../../Assets/bgimg.jpg";
 import { RightOutlined, LeftOutlined } from "@ant-design/icons";
 
 export default function AccountForm(props) {
@@ -34,7 +33,6 @@ export default function AccountForm(props) {
       style={{
         width: "100vw",
         height: "100vh",
-        // background: `url("../../Assets/bgimg.jpg") no-repeat`,
         backgroundSize: "100vw 100vh",
         paddingTop: "20vh",
       }}
@@ -51,7 +49,7 @@ export default function AccountForm(props) {
       >
         <Divider style={{ fontSize: "2vw" }}>Account Details</Divider>
         <Form
-          form={form}
+          // form={form}
           style={{ margin: "4vw 10vw 8vw 0 " }}
           size="large"
           labelCol={{ span: 10 }}
