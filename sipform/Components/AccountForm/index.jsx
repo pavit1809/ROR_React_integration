@@ -92,11 +92,11 @@ export default function AccountForm(props) {
               },
               ({ getFieldValue }) => ({
                 validator(_, value) {
-                  if (value.length > 8) {
+                  if (value.length > 7) {
                     return Promise.resolve();
                   }
                   return Promise.reject(
-                    new Error("The password should have more than 8 characters")
+                    new Error("The password should have more than 7 characters")
                   );
                 },
               }),

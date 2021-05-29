@@ -4,6 +4,7 @@ import PersonalForm from "../../Components/PersonalForm";
 import AccountForm from "../../Components/AccountForm";
 import ContactForm from "../../Components/ContactForm";
 import { useRouter } from "next/router";
+import Axios from 'axios';
 
 export default function StepForm() {
   const [step, setStep] = React.useState(0);
@@ -38,8 +39,8 @@ export default function StepForm() {
 
   // Handle fields change
   const handleChange = (input) => (e, dateString) => {
-    // console.log(e, dateString);
-    if (input === "DOB") {
+    
+    if (input === "dob") {
       const tempValues = {
         ...values,
         [input]: dateString,
