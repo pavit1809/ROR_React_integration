@@ -1,13 +1,12 @@
 import React from "react";
 import { Button } from "antd";
-// import bgImg from "../Assets/bgimg.jpg";
 import Navbar from "../Components/Navbar";
+import HeroContainer from "../Components/HeroContainer";
 import Link from 'next/link'
 
 const bgstyle = {
   width: "100vw",
-  height: "100vh",
-  background: "url('../Assets/bgimg.jpg') no-repeat",
+  height: "200vh",
   backgroundSize: "100%",
 };
 
@@ -16,12 +15,13 @@ export default class Home extends React.Component {
     return (
       <div style={bgstyle}>
         <Navbar current="home" />
-        <Link href="/StepForm">
+        <HeroContainer />
+
+        <Link href="/SignUp">
         <Button
           style={{
-            position: "absolute",
-            top: "46vh",
-            left: "45vw",
+            // position: "absolute",
+            margin: "46vh 45vw 45vh 45vw",
             width: "10vw",
             height: "8vh",
             fontSize: "22px",
@@ -29,7 +29,7 @@ export default class Home extends React.Component {
           type="primary"
           size="large"
         >
-          Open StepForm
+          Login/SignUp
         </Button>
         </Link>
       </div>

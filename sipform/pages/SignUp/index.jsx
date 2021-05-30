@@ -6,7 +6,7 @@ import ContactForm from "../../Components/ContactForm";
 import { useRouter } from "next/router";
 import Axios from 'axios';
 
-export default function StepForm() {
+export default function SignUp() {
   const [step, setStep] = React.useState(0);
   const [values, setValues] = React.useState({});
   const router = useRouter();
@@ -65,7 +65,7 @@ export default function StepForm() {
     case 0:
       return (
         <div>
-          <Navbar current="stepform" />
+          <Navbar current="signup" />
           <PersonalForm
             handleChange={handleChange}
             values={values}
@@ -76,7 +76,7 @@ export default function StepForm() {
     case 1:
       return (
         <div>
-          <Navbar current="stepform" />
+          <Navbar current="signup" />
           <AccountForm
             handleChange={handleChange}
             values={values}
@@ -88,7 +88,7 @@ export default function StepForm() {
     case 2:
       return (
         <div>
-          <Navbar current="stepform" />
+          <Navbar current="signup" />
           <ContactForm
             handleChange={handleChange}
             values={values}
@@ -100,7 +100,7 @@ export default function StepForm() {
     default:
       return (
         <div>
-          <Navbar current="stepform" />
+          <Navbar current="signup" />
           <PersonalForm
             handleChange={handleChange}
             values={values}

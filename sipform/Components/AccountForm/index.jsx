@@ -16,12 +16,7 @@ export default function AccountForm(props) {
   };
 
   const back = async () => {
-    try {
-      const values = await form.validateFields();
       props.prevStep();
-    } catch (errorInfo) { 
-      console.log("Failed:", errorInfo);
-    }
   };
 
   React.useEffect(() => {

@@ -21,12 +21,7 @@ export default function ContactForm(props) {
   const [form] = Form.useForm();
 
   const back = async () => {
-    try {
-      const values = await form.validateFields();
       props.prevStep();
-    } catch (errorInfo) {
-      console.log("Failed:", errorInfo);
-    }
   };
 
   const enterLoading = async () => {

@@ -5,6 +5,7 @@ import { RightOutlined } from "@ant-design/icons";
 
 export default function PersonalForm(props) {
   const [form] = Form.useForm();
+  const[modalShow,setModalShow] =React.useState(false);
 
   const next = async () => {
     try {
@@ -106,8 +107,12 @@ export default function PersonalForm(props) {
                 message: "Please input your pan card number!",
               },
               {
-              validator: (_, value) =>
-              value.length==10 ? Promise.resolve() : Promise.reject(new Error('Pan card should have 10 characters')),
+                validator: (_, value) =>
+                  value.length == 10
+                    ? Promise.resolve()
+                    : Promise.reject(
+                        new Error("Pan card should have 10 characters")
+                      ),
               },
             ]}
           >
@@ -127,6 +132,20 @@ export default function PersonalForm(props) {
               Next
             </Button>
           </Form.Item>
+          <div
+            style={{
+              fontSize: "1vw",
+              fontWeight: "350",
+              color: "#696969",
+              margin: "0 0 0 21vw",
+              cursor: "pointer",
+            }}
+            onClick={() => {
+              setModalShow(true)
+            }}
+          >
+            Existing User ? Login
+          </div>
         </Form>
       </div>
     </div>

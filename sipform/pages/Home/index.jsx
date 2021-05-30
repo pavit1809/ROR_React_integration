@@ -1,9 +1,8 @@
 import React from "react";
 import { Button } from "antd";
-import Navbar from "../../Components/Navbar";
+import { Navbar, HeroContainer } from "../../Components";
 
 export default class Home extends React.Component {
-
   render() {
     return (
       <div
@@ -13,7 +12,8 @@ export default class Home extends React.Component {
           backgroundSize: "100%",
         }}
       >
-      <Navbar current="home"/>
+        <Navbar current="home" />
+        <HeroContainer />
         <Button
           style={{
             position: "absolute",
@@ -32,5 +32,4 @@ export default class Home extends React.Component {
       </div>
     );
   }
-  
 }
