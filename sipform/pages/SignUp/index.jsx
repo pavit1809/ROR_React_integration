@@ -33,13 +33,13 @@ export default function SignUp() {
         setValues({});
        })
        .catch((err) => {
-         console.log("Axios Error");
+         console.log("Axios error");
        });
   };
 
   // Handle fields change
   const handleChange = (input) => (e, dateString) => {
-
+    
     if (input === "dob") {
       const tempValues = {
         ...values,
