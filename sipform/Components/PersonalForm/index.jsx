@@ -94,7 +94,7 @@ export default function PersonalForm(props) {
               disabledDate={disabledDate}
               showToday={false}
               onChange={props.handleChange("dob")}
-              placeholder="When were you born"
+              placeholder="You should atleast be of 18 years"
             />
           </Form.Item>
           <Form.Item

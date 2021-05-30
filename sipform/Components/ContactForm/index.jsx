@@ -127,28 +127,11 @@ export default function ContactForm(props) {
           wrapperCol={{ span: 14 }}
           layout="horizontal"
           initialValues={{
-            address: props.values["address"],
             state: props.values["state"],
             city: props.values["city"],
             phno: props.values["phno"],
           }}
         >
-          <Form.Item
-            name="address"
-            label="Address"
-            rules={[
-              {
-                required: true,
-                message: "Please input your address!",
-              },
-            ]}
-          >
-            <Input
-              value={props.values["address"]}
-              onChange={props.handleChange("address")}
-              placeholder="Where can we find you?"
-            />
-          </Form.Item>
           <Form.Item
             name="state"
             label="State"
