@@ -1,3 +1,5 @@
+require_relative "./userHelper.rb"
+
 module MainApp
   module V1
     class Users < Grape::API
@@ -6,48 +8,57 @@ module MainApp
       prefix :api
 
       resources :users do
+
         desc 'Create new User'
         params do
-          requires :name, type:String
-          requires :email, type:String
-          requires :password, type:String
-          requires :phno, type:String
-          requires :state, type:String
-          requires :city, type:String
-          requires :dob, type:String
-          requires :pan, type:String
+          requires :pan,:dob,:city,:state,:phno,:name, :email,:password
+          #string is default
         end
         post '/new' do
-          user=User.new(
-            name: params[:name],
-            email: params[:email],
-            password: BCrypt::Password.create(params[:password]),
-            phno: params[:phno],
-            state: params[:state],
-            city: params[:city],
-            dob: params[:dob],
-            pan: params[:pan]
-          )
+          user_hash=Helper.generateUserHash(params)
+          user=User.new(user_hash)
           if (user.valid?)
             status 201
             user.save
             present({success: true})
           else
-            puts user.errors.messages
             status 400
-            present ({message: "Invalid input"})
+            present ({success: false,message: user.errors.messages})
           end
-
         end
+
+        desc 'Login User'
+        params do
+          requires :email,:password
+          #string is default
+        end
+        post '/login' do
+          ret=Helper.checkLoginCredentials(params[:email],params[:password])
+          if (ret==nil)
+            status 401
+            present ({success: false})
+          else
+            present({token: ret[:ret_token],id: ret[:ret_user].id})
+          end
+        end
+
+        desc 'Logout User'
+        params do
+          requires :id, type:Integer
+          requires :token, type:String
+        end
+        post '/logout' do
+          if (!Helper.checkTokenValidity?(params[:id],params[:token]))
+            status 401
+            present ({success: false})
+          else
+            user=User.find_by(id: params[:id])
+            user.update_attribute(:token,nil)
+            present({success:true})
+          end
+        end
+
       end #-> end of resources
-    end #-> end of calss
-  end #-> end of module v1
-end #-> end of module TicketBooking
-
-
-
-# This type of nesting is required in nested req.body params check
-# requires :users, type: Hash do
-#   requires :age, type: Hash do
-#     requires :month, type:String
-#       requires :year, type:String
+    end
+  end
+end

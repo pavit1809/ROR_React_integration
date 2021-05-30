@@ -25,7 +25,7 @@ export default function SignUp() {
 
   const submit = async () => {
     console.log(values);
-    await Axios.post("http://localhost:5000/api/v1/users/new", user)
+    await Axios.post("http://localhost:5000/api/v1/users/new", values)
        .then((res) => {
         console.log(res)
         router.push("/");
@@ -33,13 +33,13 @@ export default function SignUp() {
         setValues({});
        })
        .catch((err) => {
-         console.log("Axios", err.response.data);
+         console.log("Axios Error");
        });
   };
 
   // Handle fields change
   const handleChange = (input) => (e, dateString) => {
-    
+
     if (input === "dob") {
       const tempValues = {
         ...values,
