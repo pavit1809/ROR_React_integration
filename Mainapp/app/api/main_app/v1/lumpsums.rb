@@ -2,19 +2,19 @@ require_relative "./genHelpers.rb"
 
 module MainApp
   module V1
-    class Sips < Grape::API
+    class Lumpsums < Grape::API
       version 'v1', using: :path
       format :json
       prefix :api
 
-      resources :sips do
+      resources :lumpsums do
 
-        desc 'Create a new Sip'
+        desc 'Create a new Lumpsum'
         params do
           requires :id, type: Integer
           requires :token, type: String
           requires :data, type: Hash do
-            requires :monthlyInvestment, :estReturnRate, type:Float
+            requires :totalInvestment, :estReturnRate, type:Float
             requires :timePeriod, type: Integer
           end
         end
@@ -24,13 +24,13 @@ module MainApp
             present ({success: false,message: "User is not logged in"})
           else
             user=User.find_by(id: params[:id])
-            sip_hash=Helper.generateSipHash(params)
-            user.sips.create(sip_hash)
-            present user.sips #-> can be altered
+            lumpsum_hash=Helper.generateLumpsumHash(params)
+            user.lumpsums.create(lumpsum_hash)
+            present user.lumpsums #-> can be altered
           end
         end
 
-        desc 'Fetch all sips for a user'
+        desc 'Fetch all lumpsums for a user'
         params do
           requires :id, type: Integer
           requires :token, type: String
@@ -41,9 +41,10 @@ module MainApp
             present ({success: false,message: "User is not logged in"})
           else
             user=User.find_by(id: params[:id])
-            present user.sips
+            present user.lumpsums
           end
         end
+
 
       end #-> end of resources
     end

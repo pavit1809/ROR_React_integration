@@ -86,5 +86,16 @@ module Helper
     return sh
   end
 
+  def Helper.generateLumpsumHash(params)
+    lh={
+      totalInvestment: params[:data][:totalInvestment],
+      estReturnRate: params[:data][:estReturnRate],
+      timePeriod: params[:data][:timePeriod],
+      dateOfApplication: Time.now.strftime("%m/%d/%Y"),
+      dateOfMaturity: (Time.now+params[:data][:timePeriod].years).strftime("%m/%d/%Y")
+    }
+    return lh
+  end
+
 
 end

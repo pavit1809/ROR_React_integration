@@ -1,4 +1,4 @@
-require_relative "./userHelper.rb"
+require_relative "./genHelpers.rb"
 
 module MainApp
   module V1

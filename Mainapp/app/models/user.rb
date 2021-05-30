@@ -1,5 +1,6 @@
 class User < ApplicationRecord
   has_many :sips
+  has_many :lumpsums
   VALID_PAN_REGEX=/[A-Z]{5}[0-9]{4}[A-Z]{1}/
   validates :name,:email,:password,:phno,:state,:city,:dob,:pan, presence: true
   validates :email, :pan, uniqueness: true
