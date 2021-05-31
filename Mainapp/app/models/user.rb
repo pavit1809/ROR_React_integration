@@ -10,3 +10,5 @@ class User < ApplicationRecord
   validates :pan, format:{with: VALID_PAN_REGEX}
 
 end
+
+#uniqueness is not tested in rspec
