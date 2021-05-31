@@ -26,7 +26,7 @@ export default function LoginDrawer(props) {
     await Axios.post("http://localhost:5000/api/v1/users/login", values)
        .then((res) => {
         console.log(res)
-        dispatch({ type: actionTypes.CHANGE_USER, user: res });
+        dispatch({ type: actionTypes.CHANGE_USER, user: res.data });
         router.push("/SIPCalculator");
        })
        .catch((err) => {

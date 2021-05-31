@@ -10,6 +10,7 @@ import { useRouter } from "next/router";
 import { Menu, Layout } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import * as actionTypes from "../../Store/actions";
+import Axios from 'axios'
 
 const { Header } = Layout;
 
@@ -25,7 +26,7 @@ export default function Navbar(props) {
 
   const logout = async() => {
     //API Call to logout
-    await Axios.post("localhost:5000/api/v1/users/logout",user)
+    await Axios.post("http://localhost:5000/api/v1/users/logout",user)
       .then((res) => {
         console.log(res);
         dispatch({ type: actionTypes.CHANGE_USER, user: null });

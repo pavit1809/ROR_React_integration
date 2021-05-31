@@ -9,6 +9,7 @@ const bgstyle = {
   backgroundSize: "100%",
 };
 import { useSelector } from "react-redux";
+import Axios from 'axios'
 
 export default function ViewSIPs() {
   const [operation, setOperation] = React.useState("sip");
@@ -24,58 +25,44 @@ export default function ViewSIPs() {
   const getCardsInfo = async() => {
     if (operation == "lumpsum") {
       //API Call for lumpsum
-      console.log("here1", operation);
-      await Axios.get("localhost:5000/api/v1/lumpsums/all", {
+      await Axios.get("http://localhost:5000/api/v1/lumpsums/all", {
         params: { id: user.id, token: user.token },
       })
         .then((res) => {
-          console.log(res);
-          // setCardsInfoList(res);
+          // console.log(res);
+          setCardsInfoList(res.data);
+          const cards=[];
+          res.data.forEach((value)=>{
+          // setCardsInfo(value);
+          cards.push(
+          <SIPCard cardsInfo={value} operation={operation} />
+          )
+          })
+          setCardsList(cards)
         })
         .catch((err) => {
           console.log("Axios error");
         });
-      //const cards=[];
-      //cardsInfoList.map((value)=>{
-      setCardsInfo({
-        totalInvestment: 190000,
-        estReturnRate: 12,
-        timePeriod: 10,
-        dateOfApplication: "date",
-        dateOfMaturity: "YYY-MM-DD",
-      });
-      // cards.push(
-      // <SIPCard cardsInfo={cardsInfo} operation={operation} />
-      // )
-      //})
-      // setCardsList(cards)
     } else {
       //API Call for sip
-      console.log("here2", operation);
-      await Axios.get("localhost:5000/api/v1/sips/all", {
+      // console.log("here2", operation);
+      await Axios.get("http://localhost:5000/api/v1/sips/all", {
         params: { id: user.id, token: user.token },
       })
         .then((res) => {
-          console.log(res);
-          // setCardsInfoList(res);
+          setCardsInfoList(res.data);
+          const cards=[];
+          res.data.forEach((value)=>{
+          // setCardsInfo(value);
+          cards.push(
+          <SIPCard cardsInfo={value} operation={operation} />
+          )
+          })
+          setCardsList(cards)
         })
         .catch((err) => {
           console.log("Axios error");
         });
-      //const cards=[];
-      //res.map((value)=>{
-      setCardsInfo({
-        monthlyInvestment: 25000,
-        estReturnRate: 15,
-        timePeriod: 10,
-        dateOfApplication: "date",
-        dateOfMaturity: "YYY-MM-DD",
-      });
-      // cards.push(
-      // <SIPCard cardsInfo={cardsInfo} operation={operation} />
-      // )
-      //})
-      // setCardsList(cards)
     }
   };
   React.useEffect(() => {
@@ -101,9 +88,7 @@ export default function ViewSIPs() {
         </Radio.Group>
       </div>
       <div style={{ paddingTop: "5vw" }}>
-        <SIPCard cardsInfo={cardsInfo} operation={operation} />
-        <SIPCard cardsInfo={cardsInfo} operation={operation} />
-        {/* {cardsList} */}
+      {cardsList}
       </div>
     </div>
   );

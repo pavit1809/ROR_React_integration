@@ -14,6 +14,7 @@ import { MoneyCollectOutlined } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
 import * as actionTypes from "../../Store/actions";
 import { useRouter } from "next/router";
+import Axios from 'axios'
 
 export default function Calculator(props) {
   const [inputValue, setInputValue] = React.useState({
@@ -128,7 +129,7 @@ export default function Calculator(props) {
         timePeriod: inputValue.time,
       };
       const values = { id: user.id, token: user.token, data: data };
-      await Axios.post("localhost:5000/api/v1/sips/new", values)
+      await Axios.post("http://localhost:5000/api/v1/sips/new", values)
         .then((res) => {
           console.log(res);
           message.success("Your SIP has been stored successfully");
@@ -143,10 +144,10 @@ export default function Calculator(props) {
         timePeriod: inputValue.time,
       };
       const values = { id: user.id, token: user.token, data: data };
-      await Axios.post("localhost:5000/api/v1/lumpsums/new", values)
+      await Axios.post("http://localhost:5000/api/v1/lumpsums/new", values)
         .then((res) => {
           console.log(res);
-          message.success("Your SIP has been stored successfully");
+          message.success("Your Lumpsum has been stored successfully");
         })
         .catch((err) => {
           console.log("Axios error");

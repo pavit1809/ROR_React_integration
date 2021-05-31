@@ -33,6 +33,9 @@ module MainApp
           #string is default
         end
         post '/login' do
+          puts params
+          puts params[:email]
+          puts params[:password]
           ret=Helper.checkLoginCredentials(params[:email],params[:password])
           if (ret==nil)
             status 401

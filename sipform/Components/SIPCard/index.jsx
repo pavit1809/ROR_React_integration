@@ -33,18 +33,16 @@ export default function SIPCard(props) {
   };
 
   React.useEffect(() => {
-    //API Call to get SIPData
-    // setSIPData(data);
     let investedValue, expReturn, totalAmount, percent;
     if (props.operation === "lumpsum") {
-      investedValue =
+      investedValue =Math.round(
         parseFloat(props.cardsInfo.totalInvestment) *
-        parseInt(props.cardsInfo.timePeriod);
-      expReturn =
+        parseInt(props.cardsInfo.timePeriod));
+      expReturn =Math.round(
         (parseFloat(props.cardsInfo.totalInvestment) *
           parseInt(props.cardsInfo.timePeriod) *
           parseFloat(props.cardsInfo.estReturnRate)) /
-        100;
+        100);
       totalAmount = expReturn + parseFloat(investedValue);
       percent = Math.ceil((expReturn / totalAmount) * 100);
       setSIPData({
@@ -59,10 +57,10 @@ export default function SIPCard(props) {
         percent: percent,
       });
     } else {
-      investedValue =
+      investedValue =Math.round(
         parseFloat(props.cardsInfo.monthlyInvestment) *
         12 *
-        parseInt(props.cardsInfo.timePeriod);
+        parseInt(props.cardsInfo.timePeriod));
       const firstFactor = parseFloat(props.cardsInfo.monthlyInvestment);
       const secondFactor =
         Math.pow(
