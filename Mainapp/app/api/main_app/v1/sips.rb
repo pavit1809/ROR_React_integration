@@ -26,7 +26,7 @@ module MainApp
             user=User.find_by(id: params[:id])
             sip_hash=Helper.generateSipHash(params)
             user.sips.create(sip_hash)
-            present user.sips #-> can be altered
+            present ({success:true}) #-> can be altered
           end
         end
 

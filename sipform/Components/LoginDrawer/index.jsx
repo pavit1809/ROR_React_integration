@@ -3,6 +3,7 @@ import { Drawer, Form, Button, Col, Row, Input } from "antd";
 import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
 import * as actionTypes from "../../Store/actions";
+import Axios from 'axios';
 
 export default function LoginDrawer(props) {
   const [values, setValues] = React.useState({});
@@ -22,7 +23,7 @@ export default function LoginDrawer(props) {
 
   const login = async() => {
     //API Call
-    await Axios.post("localhost:5000/api/v1/users/login", values)
+    await Axios.post("http://localhost:5000/api/v1/users/login", values)
        .then((res) => {
         console.log(res)
         dispatch({ type: actionTypes.CHANGE_USER, user: res });

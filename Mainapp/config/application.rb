@@ -15,10 +15,12 @@ module Mainapp
 
     config.middleware.use Rack::Cors do
       allow do
-        origins '*'
+        origins 'http://localhost:3000'
 
         # location of your API
-        resource '/api/*', :headers => :any, :methods => [:get, :post, :options, :put]
+        resource '/api/*',
+        :headers => :any,
+        :methods => [:get, :post, :options, :put]
       end
     end
     # Configuration for the application, engines, and railties goes here.

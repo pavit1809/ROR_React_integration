@@ -26,7 +26,7 @@ module MainApp
             user=User.find_by(id: params[:id])
             lumpsum_hash=Helper.generateLumpsumHash(params)
             user.lumpsums.create(lumpsum_hash)
-            present user.lumpsums #-> can be altered
+            present ({success:true}) #-> can be altered
           end
         end
 
