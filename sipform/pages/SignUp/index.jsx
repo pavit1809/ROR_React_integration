@@ -25,7 +25,7 @@ export default function SignUp() {
 
   const submit = async () => {
     console.log(values);
-    await Axios.post("http://localhost:5000/api/v1/users/new", values)
+    await Axios.post("https://maingapp.herokuapp.com/api/v1/users/new", values)
        .then((res) => {
         console.log(res)
         setStep(0);
