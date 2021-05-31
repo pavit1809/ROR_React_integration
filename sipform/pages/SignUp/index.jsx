@@ -28,9 +28,9 @@ export default function SignUp() {
     await Axios.post("http://localhost:5000/api/v1/users/new", values)
        .then((res) => {
         console.log(res)
-        router.push("/");
         setStep(0);
         setValues({});
+        return (true)
        })
        .catch((err) => {
          console.log("Axios error");

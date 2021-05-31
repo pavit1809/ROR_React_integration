@@ -8,10 +8,12 @@ import {
   Modal,
   Alert,
   message,
+  Progress,
 } from "antd";
 import allStateDistrictData from "../../Assets/city-state-data.json";
 import statesData from "../../Assets/state-data.json";
 import { LeftOutlined, LoginOutlined } from "@ant-design/icons";
+import { useRouter } from "next/router";
 
 export default function ContactForm(props) {
   const [displayStates, setDisplayStates] = React.useState("");
@@ -19,27 +21,28 @@ export default function ContactForm(props) {
   const [loading, setLoading] = React.useState(false);
   const [modalShow, setModalShow] = React.useState(false);
   const [form] = Form.useForm();
-
+  const router = useRouter();
+  
   const back = async () => {
-      props.prevStep();
+    props.prevStep();
   };
 
   const enterLoading = async () => {
     setLoading(true);
     setTimeout(() => {
-      checkValidation();
+      checkValidationAndSubmit();
       setLoading(false);
     }, 2000);
   };
 
-  const submit = () => {
-    props.submit();
+  const proceed = () => {
+    router.push("/");
   };
 
-  const checkValidation = async () => {
+  const checkValidationAndSubmit = async () => {
     try {
       const values = await form.validateFields();
-      setModalShow(true);
+      if (await props.submit()) setModalShow(true);
     } catch (errorInfo) {
       console.log("Failed:", errorInfo);
     }
@@ -85,13 +88,9 @@ export default function ContactForm(props) {
         title="Success"
         style={{ top: 20 }}
         visible={modalShow}
-        onOk={() => submit(false)}
+        onOk={() => proceed()}
         footer={[
-          <Button
-            type="primary"
-            loading={loading}
-            onClick={() => submit(false)}
-          >
+          <Button type="primary" loading={loading} onClick={() => proceed()}>
             OK
           </Button>,
         ]}
@@ -114,6 +113,13 @@ export default function ContactForm(props) {
         }}
       >
         <Divider style={{ fontSize: "2vw" }}>Contact Details</Divider>
+        <div
+          style={{
+            margin: "0 0 0 23vw",
+          }}
+        >
+          <Progress size="large" percent={100} steps={3} />
+        </div>
         <Form
           // form={form}
           style={{ margin: "4vw 10vw 8vw 0 " }}

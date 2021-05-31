@@ -1,11 +1,19 @@
 import React from "react";
-import { Form, Input, Button, DatePicker, Divider, message } from "antd";
+import {
+  Form,
+  Input,
+  Button,
+  DatePicker,
+  Divider,
+  message,
+  Progress,
+} from "antd";
 import moment from "moment";
 import { RightOutlined } from "@ant-design/icons";
-
+import LoginDrawer from "../LoginDrawer";
 export default function PersonalForm(props) {
   const [form] = Form.useForm();
-  const[modalShow,setModalShow] =React.useState(false);
+  const [drawerShow, setDrawerShow] = React.useState(false);
 
   const next = async () => {
     try {
@@ -44,7 +52,17 @@ export default function PersonalForm(props) {
           boxShadow: "4px 4px 4px 2px #888888",
         }}
       >
+        {drawerShow ? (
+          <LoginDrawer setDrawerShow={setDrawerShow} drawerShow={drawerShow} />
+        ) : null}
         <Divider style={{ fontSize: "2vw" }}>Personal Details</Divider>
+        <div
+          style={{
+            margin: "0 0 0 22vw",
+          }}
+        >
+          <Progress size="large" percent={33} steps={3} />
+        </div>
         <Form
           // form={form}
           style={{ margin: "4vw 10vw 8vw 0 " }}
@@ -141,7 +159,7 @@ export default function PersonalForm(props) {
               cursor: "pointer",
             }}
             onClick={() => {
-              setModalShow(true)
+              setDrawerShow(true);
             }}
           >
             Existing User ? Login

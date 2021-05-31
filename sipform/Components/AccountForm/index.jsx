@@ -1,5 +1,5 @@
 import React from "react";
-import { Form, Input, Button, Divider, message } from "antd";
+import { Form, Input, Button, Divider, message, Progress } from "antd";
 import { EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons";
 import { RightOutlined, LeftOutlined } from "@ant-design/icons";
 
@@ -16,7 +16,7 @@ export default function AccountForm(props) {
   };
 
   const back = async () => {
-      props.prevStep();
+    props.prevStep();
   };
 
   React.useEffect(() => {
@@ -43,6 +43,13 @@ export default function AccountForm(props) {
         }}
       >
         <Divider style={{ fontSize: "2vw" }}>Account Details</Divider>
+        <div
+          style={{
+            margin: "0 0 0 22vw",
+          }}
+        >
+          <Progress size="large" percent={66} steps={3} />
+        </div>
         <Form
           // form={form}
           style={{ margin: "4vw 10vw 8vw 0 " }}

@@ -20,7 +20,6 @@ export default class Home extends React.Component {
         <Link href="/SignUp">
         <Button
           style={{
-            // position: "absolute",
             margin: "46vh 45vw 45vh 45vw",
             width: "10vw",
             height: "8vh",
