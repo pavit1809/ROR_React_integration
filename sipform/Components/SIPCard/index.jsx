@@ -108,7 +108,7 @@ export default function SIPCard(props) {
               style={{ width: "20vw", fontSize: "1.5vw", fontWeight: "350" }}
             >
               Monthly Investment:{" "}
-              <span style={{ fontWeight: "500" }}>
+              <span style={{ fontWeight: "400" }}>
                 ₹ {SIPData.monthlyInvestment}
               </span>
               <Progress
@@ -121,7 +121,7 @@ export default function SIPCard(props) {
               style={{ width: "20vw", fontSize: "1.5vw", fontWeight: "350" }}
             >
               Total Investment:{" "}
-              <span style={{ fontWeight: "500" }}>
+              <span style={{ fontWeight: "400" }}>
                 ₹ {SIPData.totalInvestment}
               </span>
               <Progress
@@ -133,7 +133,7 @@ export default function SIPCard(props) {
 
           <div style={{ width: "20vw", fontSize: "1.5vw", fontWeight: "350" }}>
             Time Period:{" "}
-            <span style={{ fontWeight: "500" }}>{SIPData.timePeriod} Yr </span>
+            <span style={{ fontWeight: "400" }}>{SIPData.timePeriod} Yr </span>
             <Progress
               percent={(parseFloat(SIPData.timePeriod) / 3) * 10}
               format={() => "30 Yr"}
@@ -145,31 +145,31 @@ export default function SIPCard(props) {
             type="circle"
             percent={parseFloat(SIPData.estReturnRate)}
             width={150}
-            format={(percent) => "Estimated Return Rate: " + percent + "%"}
+            format={(percent) => <span style={{fontSize:"1.1vw",fontWeight: "400"}}>Estimated <br/>Return <br/>Rate: {percent} %</span>}
           />
         </Col>
         <Col style={{ margin: "3vw 0 0 0", whiteSpace: "nowrap" }} span={5}>
           <div style={{ width: "20vw", fontSize: "1.5vw", fontWeight: "350" }}>
             Invested Value:{" "}
-            <span style={{ fontWeight: "500" }}>₹ {SIPData.investedValue}</span>
+            <span style={{ fontWeight: "400" }}>₹ {SIPData.investedValue}</span>
           </div>
           <div style={{ width: "20vw", fontSize: "1.5vw", fontWeight: "350" }}>
             Expected Returns:{" "}
-            <span style={{ fontWeight: "500" }}>₹ {SIPData.expReturn}</span>
+            <span style={{ fontWeight: "400" }}>₹ {SIPData.expReturn}</span>
           </div>
           <div style={{ width: "20vw", fontSize: "1.5vw", fontWeight: "350" }}>
             Total Value :{" "}
-            <span style={{ fontWeight: "500" }}>₹ {SIPData.totalAmount}</span>
+            <span style={{ fontWeight: "400" }}>₹ {SIPData.totalAmount}</span>
           </div>
           <div style={{ width: "20vw", fontSize: "1.5vw", fontWeight: "350" }}>
             Date Of Application:{" "}
-            <span style={{ fontWeight: "500" }}>
+            <span style={{ fontWeight: "400" }}>
               {SIPData.dateOfApplication}
             </span>
           </div>
           <div style={{ width: "20vw", fontSize: "1.5vw", fontWeight: "350" }}>
             Date Of Maturity:{" "}
-            <span style={{ fontWeight: "500" }}>{SIPData.dateOfMaturity}</span>
+            <span style={{ fontWeight: "400" }}>{SIPData.dateOfMaturity}</span>
           </div>
         </Col>
         <Col

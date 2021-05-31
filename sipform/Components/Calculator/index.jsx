@@ -129,7 +129,7 @@ export default function Calculator(props) {
         timePeriod: inputValue.time,
       };
       const values = { id: user.id, token: user.token, data: data };
-      await Axios.post("http://localhost:5000/api/v1/sips/new", values)
+      await Axios.post("https://maingapp.herokuapp.com/api/v1/sips/new", values)
         .then((res) => {
           console.log(res);
           message.success("Your SIP has been stored successfully");
@@ -144,7 +144,7 @@ export default function Calculator(props) {
         timePeriod: inputValue.time,
       };
       const values = { id: user.id, token: user.token, data: data };
-      await Axios.post("http://localhost:5000/api/v1/lumpsums/new", values)
+      await Axios.post("https://maingapp.herokuapp.com/api/v1/lumpsums/new", values)
         .then((res) => {
           console.log(res);
           message.success("Your Lumpsum has been stored successfully");

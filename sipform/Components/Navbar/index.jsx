@@ -26,7 +26,7 @@ export default function Navbar(props) {
 
   const logout = async() => {
     //API Call to logout
-    await Axios.post("http://localhost:5000/api/v1/users/logout",user)
+    await Axios.post("https://maingapp.herokuapp.com/api/v1/users/logout",user)
       .then((res) => {
         console.log(res);
         dispatch({ type: actionTypes.CHANGE_USER, user: null });

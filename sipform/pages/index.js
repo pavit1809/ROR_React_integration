@@ -6,7 +6,7 @@ import Link from 'next/link'
 
 const bgstyle = {
   width: "100vw",
-  height: "200vh",
+  height: "100vh",
   backgroundSize: "100%",
 };
 
@@ -17,7 +17,7 @@ export default class Home extends React.Component {
         <Navbar current="home" />
         <HeroContainer />
 
-        <Link href="/SignUp">
+        {/* <Link href="/SignUp">
         <Button
           style={{
             margin: "46vh 45vw 45vh 45vw",
@@ -30,7 +30,7 @@ export default class Home extends React.Component {
         >
           Login/SignUp
         </Button>
-        </Link>
+        </Link> */}
       </div>
     );
   }

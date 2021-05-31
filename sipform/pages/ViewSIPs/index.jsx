@@ -25,7 +25,7 @@ export default function ViewSIPs() {
   const getCardsInfo = async() => {
     if (operation == "lumpsum") {
       //API Call for lumpsum
-      await Axios.get("http://localhost:5000/api/v1/lumpsums/all", {
+      await Axios.get("https://maingapp.herokuapp.com/api/v1/lumpsums/all", {
         params: { id: user.id, token: user.token },
       })
         .then((res) => {
@@ -46,7 +46,7 @@ export default function ViewSIPs() {
     } else {
       //API Call for sip
       // console.log("here2", operation);
-      await Axios.get("http://localhost:5000/api/v1/sips/all", {
+      await Axios.get("https://maingapp.herokuapp.com/api/v1/sips/all", {
         params: { id: user.id, token: user.token },
       })
         .then((res) => {
