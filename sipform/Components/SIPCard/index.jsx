@@ -1,36 +1,37 @@
 import React from "react";
 import { Progress, Row, Col } from "antd";
-import { Pie } from "@ant-design/charts";
+// import { Pie } from "@ant-design/charts";
 
 export default function SIPCard(props) {
   const [SIPData, setSIPData] = React.useState("");
-  let data = [
-    {
-      type: `Invested Amount : ${SIPData.investedValue}`,
-      value: SIPData.percent ? 100 - parseFloat(SIPData.percent) : 100,
-    },
-    {
-      type: `Est. Returns: ${SIPData.expReturn}`,
-      value: SIPData.percent ? parseFloat(SIPData.percent) : 0,
-    },
-  ];
+  
+  // let data = [
+  //   {
+  //     type: `Invested Amount : ${SIPData.investedValue}`,
+  //     value: SIPData.percent ? 100 - parseFloat(SIPData.percent) : 100,
+  //   },
+  //   {
+  //     type: `Est. Returns: ${SIPData.expReturn}`,
+  //     value: SIPData.percent ? parseFloat(SIPData.percent) : 0,
+  //   },
+  // ];
 
-  let config = {
-    appendPadding: 10,
-    data: data,
-    angleField: "value",
-    colorField: "type",
-    radius: 1,
-    innerRadius: 0.6,
-    statistic: {
-      title: false,
-      content: {
-        formatter: function formatter() {
-          return "SIP chart";
-        },
-      },
-    },
-  };
+  // let config = {
+  //   appendPadding: 10,
+  //   data: data,
+  //   angleField: "value",
+  //   colorField: "type",
+  //   radius: 1,
+  //   innerRadius: 0.6,
+  //   statistic: {
+  //     title: false,
+  //     content: {
+  //       formatter: function formatter() {
+  //         return "SIP chart";
+  //       },
+  //     },
+  //   },
+  // };
 
   React.useEffect(() => {
     let investedValue, expReturn, totalAmount, percent;
@@ -176,7 +177,7 @@ export default function SIPCard(props) {
           style={{ margin: "-3vw 0 0 5vw", whiteSpace: "nowrap", width: "5vw" }}
           span={6}
         >
-          <Pie {...config} />
+          {/* <Pie {...config} /> */}
         </Col>
       </Row>
     </div>

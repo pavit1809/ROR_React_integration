@@ -2,9 +2,12 @@ import React from "react";
 import { Image, Button } from "antd";
 import { useRouter } from "next/router";
 import { CalculatorOutlined, LoginOutlined } from "@ant-design/icons";
+import { useSelector } from "react-redux";
 
 export default function HeroContainer(props) {
+  const user = useSelector((state) => state.user);
   const router = useRouter();
+
   return (
     <div
       style={{
@@ -41,7 +44,7 @@ export default function HeroContainer(props) {
           Start using the feature now. <br />
           <div
             style={{
-          width: "30vw",
+              width: "30vw",
               display: "flex",
               margin: "2vw 0 0 2vw",
               flexWrap: "wrap",
@@ -59,17 +62,19 @@ export default function HeroContainer(props) {
             >
               SIP Calculator
             </Button>
-            <Button
-              type="primary"
-              size="large"
-              onClick={() => router.push("/SignUp")}
-              icon={<LoginOutlined />}
-              style={{
-                marginLeft: "2vw",
-              }}
-            >
-              Login/SignUp
-            </Button>
+            {user === null ? (
+              <Button
+                type="primary"
+                size="large"
+                onClick={() => router.push("/SignUp")}
+                icon={<LoginOutlined />}
+                style={{
+                  marginLeft: "2vw",
+                }}
+              >
+                Login/SignUp
+              </Button>
+            ) : null}
           </div>
         </div>
       </div>

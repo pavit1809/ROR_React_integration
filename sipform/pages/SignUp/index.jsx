@@ -4,7 +4,7 @@ import PersonalForm from "../../Components/PersonalForm";
 import AccountForm from "../../Components/AccountForm";
 import ContactForm from "../../Components/ContactForm";
 import { useRouter } from "next/router";
-import Axios from 'axios';
+import Axios from "axios";
 
 export default function SignUp() {
   const [step, setStep] = React.useState(0);
@@ -24,22 +24,21 @@ export default function SignUp() {
   };
 
   const submit = async () => {
-    console.log(values);
-    await Axios.post("https://maingapp.herokuapp.com/api/v1/users/new", values)
-       .then((res) => {
-        console.log(res)
+    const data = { ...values, role: "user" };
+    await Axios.post("https://floating-escarpment-56394.herokuapp.com/api/v1/users/new", data)
+      .then((res) => {
+        console.log(res);
         setStep(0);
         setValues({});
-        return (true)
-       })
-       .catch((err) => {
-         console.log("Axios error");
-       });
+        return true;
+      })
+      .catch((err) => {
+        console.log("Axios error");
+      });
   };
 
   // Handle fields change
   const handleChange = (input) => (e, dateString) => {
-    
     if (input === "dob") {
       const tempValues = {
         ...values,
