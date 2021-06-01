@@ -9,12 +9,14 @@ import {
   Button,
   message,
 } from "antd";
-import { Pie } from "@ant-design/charts";
+// import { Pie } from "@ant-design/charts";
 import { MoneyCollectOutlined } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
 import * as actionTypes from "../../Store/actions";
 import { useRouter } from "next/router";
-import Axios from 'axios'
+import Axios from "axios";
+import OptionsModal from "../../Components/OptionsModal";
+import DetailsModal from "../../Components/DetailsModal";
 
 export default function Calculator(props) {
   const [inputValue, setInputValue] = React.useState({
@@ -29,52 +31,54 @@ export default function Calculator(props) {
   const router = useRouter();
   const dispatch = useDispatch();
   const [operation, setOperation] = React.useState("sip");
+  const [showOptions, setShowOptions] = React.useState(false);
+  const [showDetails, setShowDetails] = React.useState(false);
   const user = useSelector((state) => state.user);
-  let data = [
-    {
-      type: `Invested Amount : ${inputValue.investedValue}`,
-      value: 100 - parseFloat(inputValue.percent),
-    },
-    {
-      type: `Est. Returns: ${inputValue.expReturn}`,
-      value: parseFloat(inputValue.percent),
-    },
-  ];
+  
+  // let data = [
+  //   {
+  //     type: `Invested Amount : ${inputValue.investedValue}`,
+  //     value: 100 - parseFloat(inputValue.percent),
+  //   },
+  //   {
+  //     type: `Est. Returns: ${inputValue.expReturn}`,
+  //     value: parseFloat(inputValue.percent),
+  //   },
+  // ];
 
-  let config = {
-    appendPadding: 10,
-    data: data,
-    angleField: "value",
-    colorField: "type",
-    radius: 1,
-    innerRadius: 0.6,
-    label: {
-      type: "inner",
-      offset: "-50%",
-      content: "",
-      style: {
-        textAlign: "center",
-        fontSize: 14,
-      },
-    },
-    interactions: [{ type: "element-selected" }, { type: "element-active" }],
-    statistic: {
-      title: false,
-      content: {
-        style: {
-          whiteSpace: "pre-wrap",
-          overflow: "hidden",
-          textOverflow: "ellipsis",
-        },
-        formatter: function formatter() {
-          return "SIP chart";
-        },
-      },
-    },
-  };
+  // let config = {
+  //   appendPadding: 10,
+  //   data: data,
+  //   angleField: "value",
+  //   colorField: "type",
+  //   radius: 1,
+  //   innerRadius: 0.6,
+  //   label: {
+  //     type: "inner",
+  //     offset: "-50%",
+  //     content: "",
+  //     style: {
+  //       textAlign: "center",
+  //       fontSize: 14,
+  //     },
+  //   },
+  //   interactions: [{ type: "element-selected" }, { type: "element-active" }],
+  //   statistic: {
+  //     title: false,
+  //     content: {
+  //       style: {
+  //         whiteSpace: "pre-wrap",
+  //         overflow: "hidden",
+  //         textOverflow: "ellipsis",
+  //       },
+  //       formatter: function formatter() {
+  //         return "SIP chart";
+  //       },
+  //     },
+  //   },
+  // };
 
   const onChange = async (input, value) => {
-    console.log(input, value);
     calculate(input, value, { ...inputValue, [input]: value });
   };
 
@@ -90,7 +94,6 @@ export default function Calculator(props) {
         (parseFloat(amount) * parseInt(time) * parseFloat(rate)) / 100;
     } else {
       investedValue = parseFloat(amount) * 12 * parseInt(time);
-      console.log("s", investedValue, operation);
       const firstFactor = parseFloat(amount);
       const secondFactor =
         Math.pow(1 + parseFloat(rate) / 100 / 12, parseInt(time) * 12) - 1;
@@ -101,7 +104,7 @@ export default function Calculator(props) {
     }
     totalAmount = expReturn + parseFloat(investedValue);
     percent = Math.ceil((expReturn / totalAmount) * 100);
-    if (input == null)
+    if (input === null)
       setInputValue({
         ...inputValue,
         investedValue: investedValue,
@@ -120,22 +123,31 @@ export default function Calculator(props) {
       });
   };
 
-  const invest = async() => {
+  const invest = async () => {
     //API call for adding SIP to user's db
+
     if (operation === "sip") {
       const data = {
         monthlyInvestment: inputValue.amount,
         estReturnRate: inputValue.rate,
         timePeriod: inputValue.time,
       };
-      const values = { id: user.id, token: user.token, data: data };
-      await Axios.post("https://maingapp.herokuapp.com/api/v1/sips/new", values)
+      const values = {
+        id: user.id,
+        role: user.role,
+        token: user.token,
+        data: data,
+      };
+      await Axios.post(
+        "https://floating-escarpment-56394.herokuapp.com/api/v1/sips/new",
+        values
+      )
         .then((res) => {
-          console.log(res);
           message.success("Your SIP has been stored successfully");
         })
         .catch((err) => {
-          console.log("Axios error");
+          // console.log("Axios error",err);
+          message.error("Your SIP limit has been depleted.Please upgrade for complete access and benefits")
         });
     } else {
       const data = {
@@ -143,23 +155,38 @@ export default function Calculator(props) {
         estReturnRate: inputValue.rate,
         timePeriod: inputValue.time,
       };
-      const values = { id: user.id, token: user.token, data: data };
-      await Axios.post("https://maingapp.herokuapp.com/api/v1/lumpsums/new", values)
+      const values = {
+        id: user.id,
+        role: user.role,
+        token: user.token,
+        data: data,
+      };
+      await Axios.post(
+        "https://floating-escarpment-56394.herokuapp.com/api/v1/lumpsums/new",
+        values
+      )
         .then((res) => {
-          console.log(res);
           message.success("Your Lumpsum has been stored successfully");
         })
         .catch((err) => {
-          console.log("Axios error");
+          message.error("Your Lumpsum limit has been depleted.Please upgrade for complete access and benefits")
+          // console.log("Axios error");
         });
     }
-    message.info(
-      "Check View your SIPs tab to view your investments until now"
-    );
+    message.info("Check View your SIPs tab to view your investments until now");
+  };
+
+  const showAndConfirmDetails = async () => {
+    if (user === null) {
+      // Not logged in
+      setShowOptions(true);
+    } else if (user.role === "user" || user.role === "visitor") {
+      // logged in
+      setShowDetails(true);
+    }
   };
 
   const onOperationSwitch = async (e) => {
-    // Have to find a better way to do this
     setOperation(e.target.value);
   };
 
@@ -176,6 +203,8 @@ export default function Calculator(props) {
         paddingTop: "20vh",
       }}
     >
+      <OptionsModal showOptions={showOptions} setShowOptions={setShowOptions} setShowDetails={setShowDetails} flag={true}/>
+      <DetailsModal showDetails={showDetails} setShowDetails={setShowDetails} inputValue={inputValue} invest={invest} operation={operation}/>
       <div
         style={{
           width: "85vw",
@@ -234,7 +263,7 @@ export default function Calculator(props) {
               step={5000}
               onChange={(value) => onChange("amount", value)}
               value={
-                typeof inputValue.amount === "number" ? inputValue.amount : 0
+                typeof parseFloat(inputValue.amount) === "number" ? parseFloat(inputValue.amount) : 0
               }
             />
             <Row>
@@ -264,7 +293,7 @@ export default function Calculator(props) {
               min={1}
               max={30}
               onChange={(value) => onChange("rate", value)}
-              value={typeof inputValue.rate === "number" ? inputValue.rate : 0}
+              value={typeof parseFloat(inputValue.rate) === "number" ? parseFloat(inputValue.rate) : 0}
             />
             <Row>
               <Col
@@ -293,7 +322,7 @@ export default function Calculator(props) {
               min={1}
               max={30}
               onChange={(value) => onChange("time", value)}
-              value={typeof inputValue.time === "number" ? inputValue.time : 0}
+              value={typeof parseInt(inputValue.time) === "number" ? parseInt(inputValue.time) : 0}
             />
             <Row
               style={{
@@ -371,39 +400,39 @@ export default function Calculator(props) {
             span={10}
             style={{ width: "15vw", height: "20vw", margin: "0 0 0 0" }}
           >
-            <Pie {...config} />
+            {/* <Pie {...config} /> */}
             <Button
               type="primary"
               size="large"
-              disabled={user === null}
               icon={<MoneyCollectOutlined />}
               style={{
                 marginLeft: "9vw",
               }}
-              onClick={invest}
+              onClick={showAndConfirmDetails}
             >
               Invest Now
             </Button>
-            <div
-              style={{
-                fontSize: "1vw",
-                color: "#696969",
-                marginLeft: "4vw",
-                fontWeight: "350",
-              }}
-            >
-              *To use this feature,{" "}
-              <span
+            {user === null ? (
+              <div
                 style={{
-                  fontWeight: "400",
-                  cursor: "pointer",
+                  fontSize: "1vw",
+                  color: "#696969",
+                  fontWeight: "350",
                 }}
-                onClick={() => router.push("/SignUp")}
               >
-                Login/SignUp
-              </span>{" "}
-              to our site
-            </div>
+                *To use this feature without any limits,{" "}
+                <span
+                  style={{
+                    fontWeight: "400",
+                    cursor: "pointer",
+                  }}
+                  onClick={() => router.push("/SignUp")}
+                >
+                  Login/SignUp
+                </span>{" "}
+                to our site
+              </div>
+            ) : null}
           </Col>
         </Row>
       </div>

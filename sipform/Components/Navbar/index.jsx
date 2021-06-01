@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import {
   CalculatorOutlined,
   HomeOutlined,
@@ -10,7 +10,7 @@ import { useRouter } from "next/router";
 import { Menu, Layout } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import * as actionTypes from "../../Store/actions";
-import Axios from 'axios'
+import Axios from "axios";
 
 const { Header } = Layout;
 
@@ -24,9 +24,9 @@ export default function Navbar(props) {
     setCurrent(e.key);
   };
 
-  const logout = async() => {
+  const logout = async () => {
     //API Call to logout
-    await Axios.post("https://maingapp.herokuapp.com/api/v1/users/logout",user)
+    await Axios.post("https://floating-escarpment-56394.herokuapp.com/api/v1/users/logout", user)
       .then((res) => {
         console.log(res);
         dispatch({ type: actionTypes.CHANGE_USER, user: null });
@@ -36,6 +36,7 @@ export default function Navbar(props) {
         console.log("Axios error");
       });
   };
+
   React.useEffect(() => {
     setCurrent(props.current);
   }, []);
@@ -65,16 +66,15 @@ export default function Navbar(props) {
           >
             SIP Calculator
           </Menu.Item>
-          {user === null ? null : (
-            <Menu.Item
-              key="viewsip"
-              icon={<FundViewOutlined style={{ fontSize: "1.3vw" }} />}
-              onClick={() => router.push("/ViewSIPs")}
-              style={{ cursor: "pointer", fontSize: "1.3vw" }}
-            >
-              View your SIPs
-            </Menu.Item>
-          )}
+          <Menu.Item
+            key="viewsip"
+            icon={<FundViewOutlined style={{ fontSize: "1.3vw" }} />}
+            onClick={() => router.push("/ViewSIPs")}
+            style={{ cursor: "pointer", fontSize: "1.3vw" }}
+          >
+            View your SIPs
+          </Menu.Item>
+          
           {user === null ? (
             <Menu.Item
               key="signup"
@@ -94,6 +94,7 @@ export default function Navbar(props) {
               Logout
             </Menu.Item>
           )}
+        
         </Menu>
       </Header>
     </Layout>

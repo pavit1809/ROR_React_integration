@@ -102,6 +102,7 @@ export default function ContactForm(props) {
           showIcon
         />
       </Modal>
+      
       <div
         style={{
           width: "50vw",

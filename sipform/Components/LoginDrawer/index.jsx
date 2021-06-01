@@ -1,5 +1,5 @@
 import React from "react";
-import { Drawer, Form, Button, Col, Row, Input } from "antd";
+import { Drawer, Form, Button, Col, Row, Input ,Image} from "antd";
 import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
 import * as actionTypes from "../../Store/actions";
@@ -14,25 +14,28 @@ export default function LoginDrawer(props) {
   const onClose = () => {
     props.setDrawerShow(false);
   };
+
   const onChangeEmail = (e) => {
     setValues({ ...values, email: e.target.value });
   };
+
   const onChangePassword = (e) => {
     setValues({ ...values, password: e.target.value });
   };
 
   const login = async() => {
-    //API Call
-    await Axios.post("https://maingapp.herokuapp.com/api/v1/users/login", values)
+    //API Call to login user
+    await Axios.post("https://floating-escarpment-56394.herokuapp.com/api/v1/users/login", values)
        .then((res) => {
         console.log(res)
-        dispatch({ type: actionTypes.CHANGE_USER, user: res.data });
+        dispatch({ type: actionTypes.CHANGE_USER, user: {id: res.data.id,token: res.data.token,role:"user" }});       //change after API set
         router.push("/SIPCalculator");
        })
        .catch((err) => {
          console.log("Axios error");
        });
   };
+  
   const loginClick = async () => {
     try {
       await form.validateFields();
@@ -126,6 +129,16 @@ export default function LoginDrawer(props) {
             </Col>
           </Row>
         </Form>
+        <div
+          style={{
+            margin: "0 2vw 0 2vw",
+            overflow: "hidden",
+            width: "700",
+            height: "500",
+          }}
+        >
+          <Image src="/login.webp" width={700} height={500} />
+        </div>
       </Drawer>
     </>
   );
