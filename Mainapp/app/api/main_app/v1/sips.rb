@@ -12,7 +12,7 @@ module MainApp
         desc 'Create a new Sip'
         params do
           requires :id, type: Integer
-          requires :token, type: String
+          requires :token, :role, type: String
           requires :data, type: Hash do
             requires :monthlyInvestment, :estReturnRate, type:Float
             requires :timePeriod, type: Integer
@@ -24,9 +24,14 @@ module MainApp
             present ({success: false,message: "User is not logged in"})
           else
             user=User.find_by(id: params[:id])
-            sip_hash=Helper.generateSipHash(params)
-            user.sips.create(sip_hash)
-            present ({success:true}) #-> can be altered
+            if (params[:role]=="visitor" && user.sips.count>=2)
+              status 401
+              present ({success:false, message: "Please signUp for complete access and benifits"})
+            else
+              sip_hash=Helper.generateSipHash(params)
+              user.sips.create(sip_hash)
+              present ({success:true}) #-> can be altered
+            end
           end
         end
 

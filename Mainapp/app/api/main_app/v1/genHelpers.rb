@@ -13,11 +13,23 @@ module Helper
       state: params[:state],
       city: params[:city],
       dob: params[:dob],
-      pan: params[:pan]
+      pan: params[:pan],
+      role: params[:role]
     }
     return uh
   end
 
+  def Helper.generateVisitorHash(params)
+    if (params[:password].length<8)
+      return nil
+    end
+    vh={
+      email: params[:email],
+      password: BCrypt::Password.create(params[:password]),
+      role: params[:role]
+    }
+    return vh
+  end
 
   #method for checking if the login credentials are valid and generation token on successful validation
   def Helper.checkLoginCredentials(email,password)
