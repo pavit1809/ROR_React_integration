@@ -10,7 +10,8 @@ RSpec.describe User, type: :model do
       state: "UP",
       city: "Lucknow",
       dob: "18-09-2001",
-      pan: "ABCDE1234D"
+      pan: "ABCDE1234D",
+      role: "user"
     )
   }
   before {subject.save}
@@ -98,6 +99,29 @@ RSpec.describe User, type: :model do
 
   it 'pan should be present' do
     subject.pan = nil
+    expect(subject).to_not be_valid
+  end
+
+  it 'role should be present' do
+    subject.role = nil
+    expect(subject).to_not be_valid
+  end
+
+  it 'visitor should be valid' do
+    subject.role="visitor"
+    subject.pan = nil
+    expect(subject).to be_valid
+  end
+
+  it 'visitor email is required' do
+    subject.role="visitor"
+    subject.email = nil
+    expect(subject).to_not be_valid
+  end
+
+  it 'visitor password is required' do
+    subject.role="visitor"
+    subject.password = nil
     expect(subject).to_not be_valid
   end
 

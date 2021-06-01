@@ -6,7 +6,7 @@ class User < ApplicationRecord
 
 
   #necessary conditions
-  validates :email,:password, presence: true
+  validates :email,:password,:role, presence: true
   validates :email, format: {with: URI::MailTo::EMAIL_REGEXP},uniqueness:true
 
   #only needed if user is a paid one and not a free one
