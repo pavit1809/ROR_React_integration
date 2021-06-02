@@ -1,5 +1,5 @@
 import React from "react";
-import { Modal, Form, Row, Col, Button, Input } from "antd";
+import { Modal, Form, Row, Col, Button, Input, message } from "antd";
 import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
 import * as actionTypes from "../../Store/actions";
@@ -39,11 +39,11 @@ export default function OptionsModal(props) {
       console.log("Failed:", errorInfo);
     }
   };
-  
+
   const signupAndLogin = async () => {
     //API Call to login and signup visitor
     const data = { ...values, role: "visitor" };
-    console.log(data)
+    console.log(data);
     await Axios.post(
       "https://floating-escarpment-56394.herokuapp.com/api/v1/users/visitor",
       data
@@ -56,14 +56,17 @@ export default function OptionsModal(props) {
             token: res.data.token,
             role: "visitor",
           },
-        }); 
-        props.setShowOptions(false)//change after API set
+        });
+        props.setShowOptions(false); 
+        props.flag ? props.setShowDetails(true) : null;
       })
       .catch((err) => {
+        message.error(
+          "Either you are not a visitor or the field values entered are wrong"
+        );
+        props.setShowOptions(false);
         console.log("Axios error");
       });
-      props.flag ? props.setShowDetails(true) : null;
-
   };
 
   return (
@@ -84,16 +87,18 @@ export default function OptionsModal(props) {
       onCancel={() => props.setShowOptions(false)}
       onOk={() => props.setShowOptions(false)}
       footer={[
-        visible ? (
-          <Button onClick={cancelLogin} style={{ marginRight: 8 }}>
-            Cancel
-          </Button>
-        ) : null,
-        visible ? (
-          <Button onClick={loginClick} type="primary">
-            Login
-          </Button>
-        ) : null,
+        visible
+          ? ((
+              <Button onClick={cancelLogin} style={{ marginRight: 8 }}>
+                Cancel
+              </Button>
+            ),
+            (
+              <Button onClick={loginClick} type="primary">
+                Login
+              </Button>
+            ))
+          : null,
       ]}
       zIndex={0}
     >
@@ -131,7 +136,7 @@ export default function OptionsModal(props) {
         <br />
         <span
           style={{
-          fontSize: "1.3vw",
+            fontSize: "1.3vw",
             fontWeight: "450",
             cursor: "pointer",
           }}

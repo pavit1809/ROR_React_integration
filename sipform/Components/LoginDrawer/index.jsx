@@ -28,7 +28,7 @@ export default function LoginDrawer(props) {
     await Axios.post("https://floating-escarpment-56394.herokuapp.com/api/v1/users/login", values)
        .then((res) => {
         console.log(res)
-        dispatch({ type: actionTypes.CHANGE_USER, user: {id: res.data.id,token: res.data.token,role:"user" }});       //change after API set
+        dispatch({ type: actionTypes.CHANGE_USER, user: {id: res.data.id,token: res.data.token,role:"user" }});       
         router.push("/SIPCalculator");
        })
        .catch((err) => {

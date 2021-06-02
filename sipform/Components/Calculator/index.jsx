@@ -18,6 +18,16 @@ import Axios from "axios";
 import OptionsModal from "../../Components/OptionsModal";
 import DetailsModal from "../../Components/DetailsModal";
 
+const InputHeading = {
+  marginLeft: "2vw",
+  fontSize: "1.2vw",
+  fontWeight: "400",
+};
+const CalculatedHeading = {
+  justifyContent: "center",
+  fontSize: "1vw",
+  fontWeight: "300",
+};
 export default function Calculator(props) {
   const [inputValue, setInputValue] = React.useState({
     amount: "25000",
@@ -34,7 +44,7 @@ export default function Calculator(props) {
   const [showOptions, setShowOptions] = React.useState(false);
   const [showDetails, setShowDetails] = React.useState(false);
   const user = useSelector((state) => state.user);
-  
+
   // let data = [
   //   {
   //     type: `Invested Amount : ${inputValue.investedValue}`,
@@ -79,14 +89,12 @@ export default function Calculator(props) {
   // };
 
   const onChange = async (input, value) => {
-    calculate(input, value, { ...inputValue, [input]: value });
+    calculate({ ...inputValue, [input]: value });
   };
 
-  const calculate = (input, value, inputValue) => {
+  const calculate = (inputValue) => {
     //SIP calculation to be checked
-    const amount = inputValue.amount;
-    const rate = inputValue.rate;
-    const time = inputValue.time;
+    const { amount, rate, time } = inputValue;
     let investedValue, expReturn, totalAmount, percent;
     if (operation == "lumpsum") {
       investedValue = parseFloat(amount) * parseInt(time);
@@ -104,40 +112,22 @@ export default function Calculator(props) {
     }
     totalAmount = expReturn + parseFloat(investedValue);
     percent = Math.ceil((expReturn / totalAmount) * 100);
-    if (input === null)
-      setInputValue({
-        ...inputValue,
-        investedValue: investedValue,
-        expReturn: expReturn,
-        totalAmount: totalAmount,
-        percent: percent,
-      });
-    else
-      setInputValue({
-        ...inputValue,
-        investedValue: investedValue,
-        expReturn: expReturn,
-        totalAmount: totalAmount,
-        percent: percent,
-        [input]: value,
-      });
+    setInputValue({
+      ...inputValue,
+      investedValue: investedValue,
+      expReturn: expReturn,
+      totalAmount: totalAmount,
+      percent: percent,
+    });
   };
 
   const invest = async () => {
     //API call for adding SIP to user's db
-
+    const values = {
+      ...user,
+      data: inputValue,
+    };
     if (operation === "sip") {
-      const data = {
-        monthlyInvestment: inputValue.amount,
-        estReturnRate: inputValue.rate,
-        timePeriod: inputValue.time,
-      };
-      const values = {
-        id: user.id,
-        role: user.role,
-        token: user.token,
-        data: data,
-      };
       await Axios.post(
         "https://floating-escarpment-56394.herokuapp.com/api/v1/sips/new",
         values
@@ -147,20 +137,11 @@ export default function Calculator(props) {
         })
         .catch((err) => {
           // console.log("Axios error",err);
-          message.error("Your SIP limit has been depleted.Please upgrade for complete access and benefits")
+          message.error(
+            "Your SIP limit has been depleted.Please upgrade for complete access and benefits"
+          );
         });
     } else {
-      const data = {
-        totalInvestment: inputValue.amount,
-        estReturnRate: inputValue.rate,
-        timePeriod: inputValue.time,
-      };
-      const values = {
-        id: user.id,
-        role: user.role,
-        token: user.token,
-        data: data,
-      };
       await Axios.post(
         "https://floating-escarpment-56394.herokuapp.com/api/v1/lumpsums/new",
         values
@@ -169,11 +150,12 @@ export default function Calculator(props) {
           message.success("Your Lumpsum has been stored successfully");
         })
         .catch((err) => {
-          message.error("Your Lumpsum limit has been depleted.Please upgrade for complete access and benefits")
+          message.error(
+            "Your Lumpsum limit has been depleted.Please upgrade for complete access and benefits"
+          );
           // console.log("Axios error");
         });
     }
-    message.info("Check View your SIPs tab to view your investments until now");
   };
 
   const showAndConfirmDetails = async () => {
@@ -191,8 +173,12 @@ export default function Calculator(props) {
   };
 
   React.useEffect(() => {
-    calculate(null, null, inputValue);
+    calculate(inputValue);
   }, [operation]);
+
+  React.useEffect(() => {
+    message.info("Check View your SIPs tab to view your investments until now");
+  }, []);
 
   return (
     <div
@@ -203,8 +189,19 @@ export default function Calculator(props) {
         paddingTop: "20vh",
       }}
     >
-      <OptionsModal showOptions={showOptions} setShowOptions={setShowOptions} setShowDetails={setShowDetails} flag={true}/>
-      <DetailsModal showDetails={showDetails} setShowDetails={setShowDetails} inputValue={inputValue} invest={invest} operation={operation}/>
+      <OptionsModal
+        showOptions={showOptions}
+        setShowOptions={setShowOptions}
+        setShowDetails={setShowDetails}
+        flag={true}
+      />
+      <DetailsModal
+        showDetails={showDetails}
+        setShowDetails={setShowDetails}
+        inputValue={inputValue}
+        invest={invest}
+        operation={operation}
+      />
       <div
         style={{
           width: "85vw",
@@ -228,14 +225,7 @@ export default function Calculator(props) {
                 marginTop: "1vw",
               }}
             >
-              <Col
-                style={{
-                  marginLeft: "2vw",
-                  fontSize: "1.2vw",
-                  fontWeight: "400",
-                }}
-                span={16}
-              >
+              <Col style={InputHeading} span={16}>
                 {operation == "sip" ? "Monthly" : "Total"} Investment
               </Col>
               <Col span={4}>
@@ -263,18 +253,13 @@ export default function Calculator(props) {
               step={5000}
               onChange={(value) => onChange("amount", value)}
               value={
-                typeof parseFloat(inputValue.amount) === "number" ? parseFloat(inputValue.amount) : 0
+                typeof parseFloat(inputValue.amount) === "number"
+                  ? parseFloat(inputValue.amount)
+                  : 0
               }
             />
             <Row>
-              <Col
-                style={{
-                  marginLeft: "2vw",
-                  fontSize: "1.2vw",
-                  fontWeight: "400",
-                }}
-                span={18}
-              >
+              <Col style={InputHeading} span={18}>
                 Expected Return Rate
               </Col>
               <Col span={4}>
@@ -293,17 +278,14 @@ export default function Calculator(props) {
               min={1}
               max={30}
               onChange={(value) => onChange("rate", value)}
-              value={typeof parseFloat(inputValue.rate) === "number" ? parseFloat(inputValue.rate) : 0}
+              value={
+                typeof parseFloat(inputValue.rate) === "number"
+                  ? parseFloat(inputValue.rate)
+                  : 0
+              }
             />
             <Row>
-              <Col
-                style={{
-                  marginLeft: "2vw",
-                  fontSize: "1.2vw",
-                  fontWeight: "400",
-                }}
-                span={18}
-              >
+              <Col style={InputHeading} span={18}>
                 Time Period
               </Col>
               <Col span={4}>
@@ -322,7 +304,11 @@ export default function Calculator(props) {
               min={1}
               max={30}
               onChange={(value) => onChange("time", value)}
-              value={typeof parseInt(inputValue.time) === "number" ? parseInt(inputValue.time) : 0}
+              value={
+                typeof parseInt(inputValue.time) === "number"
+                  ? parseInt(inputValue.time)
+                  : 0
+              }
             />
             <Row
               style={{
@@ -337,15 +323,7 @@ export default function Calculator(props) {
                   fontWeight: "400",
                 }}
               >
-                <Row
-                  style={{
-                    justifyContent: "center",
-                    fontSize: "1vw",
-                    fontWeight: "300",
-                  }}
-                >
-                  Invested Amount{" "}
-                </Row>
+                <Row style={CalculatedHeading}>Invested Amount </Row>
                 <Row style={{ justifyContent: "center" }}>
                   <b>
                     {inputValue.investedValue
@@ -361,15 +339,7 @@ export default function Calculator(props) {
                   fontWeight: "400",
                 }}
               >
-                <Row
-                  style={{
-                    justifyContent: "center",
-                    fontSize: "1vw",
-                    fontWeight: "300",
-                  }}
-                >
-                  Est. Returns{" "}
-                </Row>
+                <Row style={CalculatedHeading}>Est. Returns </Row>
                 <Row style={{ justifyContent: "center" }}>
                   <b>
                     {inputValue.expReturn ? `₹ ${inputValue.expReturn}` : null}
