@@ -48,7 +48,7 @@ module MainApp
         end
         post '/visitor' do
           visitor=User.find_by(email: params[:email],role: params[:role])
-          if (visitor==nil)
+          if (visitor == nil)
             #new visitor
             visitor_hash=Helper.generateVisitorHash(params)
             visitor=User.new(visitor_hash)
@@ -56,7 +56,7 @@ module MainApp
               visitor.save
               #use login function here
               ret=Helper.checkLoginCredentials(params[:email],params[:password])
-              if (ret==nil)
+              if (ret == nil)
                 status 401
                 present ({success: false})
               else
@@ -71,7 +71,7 @@ module MainApp
           else
             #use login function
             ret=Helper.checkLoginCredentials(params[:email],params[:password])
-            if (ret==nil)
+            if (ret == nil)
               status 401
               present ({success: false})
             else
