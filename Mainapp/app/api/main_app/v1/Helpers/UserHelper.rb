@@ -1,4 +1,4 @@
-module Helper
+module UserHelper
 
   def self.generate_response(success, status, message, response)
     {
@@ -116,3 +116,4 @@ module Helper
   end
 
 end
+

@@ -6,8 +6,7 @@ class CreateInvestments < ActiveRecord::Migration[6.1]
       t.float :returnRate
       t.integer :timePeriod
       t.float :totalExpectedReturn
-      t.float :totalInvestment
-      t.float :totalAmountInHand
+      t.float :totalInvestedAmount
       t.string :mode
       t.references :user, null: false, foreign_key: true
 

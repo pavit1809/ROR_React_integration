@@ -10,19 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_02_142248) do
+ActiveRecord::Schema.define(version: 2021_06_02_184428) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "investments", force: :cascade do |t|
-    t.float "totatInvestment"
+    t.float "totalInvestment"
     t.float "monthlyInvestment"
     t.float "returnRate"
     t.integer "timePeriod"
     t.float "totalExpectedReturn"
-    t.float "totalInvestment"
-    t.float "totalAmountInHand"
+    t.float "totalInvestedAmount"
     t.string "mode"
     t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false

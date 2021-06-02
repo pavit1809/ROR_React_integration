@@ -8,6 +8,7 @@ module MainApp
       prefix :api
 
       resources :users do
+
         desc 'Create new User'
         params do
           requires :role, :email
@@ -17,7 +18,7 @@ module MainApp
           end
         end
         post '/new' do
-          present Helper.handle_user_signup(params)
+          present UserHelper.handle_user_signup(params)
         end
 
         desc 'Login User'
@@ -25,7 +26,7 @@ module MainApp
           requires :email, :password
         end
         post '/login' do
-          present Helper.handle_user_login(params)
+          present UserHelper.handle_user_login(params)
         end
 
         desc 'Basic Details'
@@ -34,7 +35,7 @@ module MainApp
           requires :token, :role
         end
         get '/details' do
-          Helper.handle_user_details(params)
+          present UserHelper.handle_user_details(params)
         end
 
         desc 'Logout User'
@@ -43,7 +44,7 @@ module MainApp
           requires :token, :role
         end
         post '/logout' do
-          present Helper.handle_user_logout(params)
+          present UserHelper.handle_user_logout(params)
         end
       end
     end

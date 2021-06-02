@@ -1,6 +1,6 @@
 class User < ApplicationRecord
-
-  VALID_PAN_REGEX = /[A-Z]{5}[0-9]{4}[A-Z]/
+  has_many :investments, dependent: :destroy
+  VALID_PAN_REGEX = /[A-Z]{5}[0-9]{4}[A-Z]/.freeze
 
   validates :email, :password, :role, presence: true
   validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }, uniqueness: true
