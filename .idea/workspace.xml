@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="5a00966a-49ed-4a98-bf66-3c227b4e4080" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/Mainapp/app/api/main_app/v1/genHelpers.rb" beforeDir="false" afterPath="$PROJECT_DIR$/Mainapp/app/api/main_app/v1/genHelpers.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Mainapp/app/api/main_app/v1/users.rb" beforeDir="false" afterPath="$PROJECT_DIR$/Mainapp/app/api/main_app/v1/users.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Mainapp/app/models/user.rb" beforeDir="false" afterPath="$PROJECT_DIR$/Mainapp/app/models/user.rb" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1tOYuNPovhpxlbsXL8eAHlVC2dX" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/Mainapp" />
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="SpringUtil" SPRING_PRE_LOADER_OPTION="true" RAKE_SPRING_PRE_LOADER_OPTION="true" RAILS_SPRING_PRE_LOADER_OPTION="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="5a00966a-49ed-4a98-bf66-3c227b4e4080" name="Default Changelist" comment="" />
+      <created>1622641825740</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1622641825740</updated>
+      <workItem from="1622641835873" duration="52000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>
