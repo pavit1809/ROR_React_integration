@@ -36,6 +36,7 @@ const store = createStore(
 store.subscribe(() => {
   saveState({
     user: store.getState().user,
+    SIPData: store.getState().SIPData,
   });
 });
 

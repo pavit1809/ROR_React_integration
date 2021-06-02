@@ -4,7 +4,7 @@ import { Progress, Row, Col } from "antd";
 
 export default function SIPCard(props) {
   const [SIPData, setSIPData] = React.useState("");
-  
+
   // let data = [
   //   {
   //     type: `Invested Amount : ${SIPData.investedValue}`,
@@ -35,52 +35,60 @@ export default function SIPCard(props) {
 
   React.useEffect(() => {
     let investedValue, expReturn, totalAmount, percent;
+    const { cardsInfo } = props;
+    const { timePeriod, estReturnRate, totalInvestment, monthlyInvestment } =
+      cardsInfo;
+
     if (props.operation === "lumpsum") {
-      investedValue =Math.round(
-        parseFloat(props.cardsInfo.totalInvestment) *
-        parseInt(props.cardsInfo.timePeriod));
-      expReturn =Math.round(
-        (parseFloat(props.cardsInfo.totalInvestment) *
-          parseInt(props.cardsInfo.timePeriod) *
-          parseFloat(props.cardsInfo.estReturnRate)) /
-        100);
+      investedValue = Math.round(
+        parseFloat(totalInvestment) * parseInt(timePeriod)
+      );
+
+      expReturn = Math.round(
+        (parseFloat(totalInvestment) *
+          parseInt(timePeriod) *
+          parseFloat(estReturnRate)) /
+          100
+      );
+
       totalAmount = expReturn + parseFloat(investedValue);
+
       percent = Math.ceil((expReturn / totalAmount) * 100);
+
       setSIPData({
-        totalInvestment: parseFloat(props.cardsInfo.totalInvestment),
-        estReturnRate: parseFloat(props.cardsInfo.estReturnRate),
-        timePeriod: parseInt(props.cardsInfo.timePeriod),
-        dateOfApplication: props.cardsInfo.dateOfApplication,
-        dateOfMaturity: props.cardsInfo.dateOfMaturity,
+        ...cardsInfo,
         investedValue: investedValue,
         expReturn: expReturn,
         totalAmount: totalAmount,
         percent: percent,
       });
-    } else {
-      investedValue =Math.round(
-        parseFloat(props.cardsInfo.monthlyInvestment) *
-        12 *
-        parseInt(props.cardsInfo.timePeriod));
-      const firstFactor = parseFloat(props.cardsInfo.monthlyInvestment);
+    } 
+    else {
+      investedValue = Math.round(
+        parseFloat(monthlyInvestment) * 12 * parseInt(timePeriod)
+      );
+
+      const firstFactor = parseFloat(monthlyInvestment);
+
       const secondFactor =
         Math.pow(
-          1 + parseFloat(props.cardsInfo.estReturnRate) / 100 / 12,
-          parseInt(props.cardsInfo.timePeriod) * 12
+          1 + parseFloat(estReturnRate) / 100 / 12,
+          parseInt(timePeriod) * 12
         ) - 1;
+
       const thirdFactor =
-        (1 + parseFloat(props.cardsInfo.estReturnRate) / 100 / 12) /
-        (parseFloat(props.cardsInfo.estReturnRate) / 100 / 12);
+        (1 + parseFloat(estReturnRate) / 100 / 12) /
+        (parseFloat(estReturnRate) / 100 / 12);
+
       expReturn =
         Math.round(firstFactor * secondFactor * thirdFactor) - investedValue;
+
       totalAmount = expReturn + parseFloat(investedValue);
+
       percent = Math.ceil((expReturn / totalAmount) * 100);
+
       setSIPData({
-        monthlyInvestment: parseFloat(props.cardsInfo.monthlyInvestment),
-        estReturnRate: parseFloat(props.cardsInfo.estReturnRate),
-        timePeriod: parseInt(props.cardsInfo.timePeriod),
-        dateOfApplication: props.cardsInfo.dateOfApplication,
-        dateOfMaturity: props.cardsInfo.dateOfMaturity,
+        ...cardsInfo,
         investedValue: investedValue,
         expReturn: expReturn,
         totalAmount: totalAmount,
@@ -88,7 +96,7 @@ export default function SIPCard(props) {
       });
     }
     console.log(SIPData);
-  }, [props]);
+  }, []);
 
   return (
     <div
@@ -146,7 +154,13 @@ export default function SIPCard(props) {
             type="circle"
             percent={parseFloat(SIPData.estReturnRate)}
             width={150}
-            format={(percent) => <span style={{fontSize:"1.1vw",fontWeight: "400"}}>Estimated <br/>Return <br/>Rate: {percent} %</span>}
+            format={(percent) => (
+              <span style={{ fontSize: "1.1vw", fontWeight: "400" }}>
+                Estimated <br />
+                Return <br />
+                Rate: {percent} %
+              </span>
+            )}
           />
         </Col>
         <Col style={{ margin: "3vw 0 0 0", whiteSpace: "nowrap" }} span={5}>

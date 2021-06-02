@@ -30,6 +30,7 @@ export default function Navbar(props) {
       .then((res) => {
         console.log(res);
         dispatch({ type: actionTypes.CHANGE_USER, user: null });
+        dispatch({ type: actionTypes.CHANGE_SIPDATA, SIPData: null });
         router.push("/");
       })
       .catch((err) => {
