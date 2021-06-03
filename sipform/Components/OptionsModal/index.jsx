@@ -1,9 +1,10 @@
 import React from "react";
-import { Modal, Form, Row, Col, Button, Input, message } from "antd";
+import { Form, Row, Col, Button, Input, message } from "antd";
 import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
 import * as actionTypes from "../../Store/actions";
 import Axios from "axios";
+import { ModalBody } from "./styles";
 
 export default function OptionsModal(props) {
   const [values, setValues] = React.useState({});
@@ -57,7 +58,7 @@ export default function OptionsModal(props) {
             role: "visitor",
           },
         });
-        props.setShowOptions(false); 
+        props.setShowOptions(false);
         props.flag ? props.setShowDetails(true) : null;
       })
       .catch((err) => {
@@ -70,7 +71,8 @@ export default function OptionsModal(props) {
   };
 
   return (
-    <Modal
+    <ModalBody
+      color={color}
       title={
         <span
           style={{
@@ -82,106 +84,42 @@ export default function OptionsModal(props) {
         </span>
       }
       bodyStyle={{ backgroundColor: "#1890ff69", border: "2px solid #000000" }}
-      style={{ top: 200 }}
       visible={props.showOptions}
       onCancel={() => props.setShowOptions(false)}
       onOk={() => props.setShowOptions(false)}
       footer={[
-        visible
-          ? ((
-              <Button onClick={cancelLogin} style={{ marginRight: 8 }}>
-                Cancel
-              </Button>
-            ),
-            (
-              <Button onClick={loginClick} type="primary">
-                Login
-              </Button>
-            ))
-          : null,
+        visible ? (
+          <Button onClick={loginClick} type="primary">
+            Login
+          </Button>
+        ) : null,
       ]}
       zIndex={0}
     >
-      <div
-        style={{
-          fontSize: "1.5vw",
-          color: color,
-          fontWeight: "400",
-          textAlign: "center",
-        }}
-      >
+      <div className="textStyle1">
         To use this feature, either
         <br />
-        <span
-          style={{
-            fontWeight: "450",
-            cursor: "pointer",
-          }}
-          onClick={() => router.push("/SignUp")}
-        >
+        <span className="highlight" onClick={() => router.push("/SignUp")}>
           <u>Login/SignUp</u>
         </span>
         <br />
         to our site
       </div>
-      <div
-        style={{
-          fontSize: "1vw",
-          color: color,
-          fontWeight: "400",
-          textAlign: "center",
-        }}
-      >
+      <div className="textStyle2">
         Or
         <br />
-        <span
-          style={{
-            fontSize: "1.3vw",
-            fontWeight: "450",
-            cursor: "pointer",
-          }}
-          onClick={usePublicVersion}
-        >
+        <span className="highlight" onClick={usePublicVersion}>
           <u>Use</u>
         </span>{" "}
-        the public feature by just entering your email to get a{" "}
-        <span
-          style={{
-            fontWeight: "450",
-          }}
-        >
-          max
-        </span>{" "}
-        limit of calculating and storing SIPs of{" "}
-        <span
-          style={{
-            fontWeight: "450",
-          }}
-        >
-          2
-        </span>
+        the public feature by just entering your email to get a <span>max</span>{" "}
+        limit of calculating and storing SIPs of <span>2</span>
         ,
         <br />
         and{" "}
-        <span
-          style={{
-            fontWeight: "450",
-            cursor: "pointer",
-          }}
-          onClick={() => router.push("/Upgrade")}
-        >
+        <span className="highlight" onClick={() => router.push("/Upgrade")}>
           <u>Upgrade</u>
         </span>{" "}
-        later to the{" "}
-        <span
-          style={{
-            fontWeight: "450",
-            cursor: "pointer",
-          }}
-        >
-          premium account
-        </span>
-        .
+        later to the <span>premium account</span>.
       </div>
       {visible ? (
         <Form form={form} layout="vertical" hideRequiredMark>
@@ -243,6 +181,6 @@ export default function OptionsModal(props) {
           </Row>
         </Form>
       ) : null}
-    </Modal>
+    </ModalBody>
   );
 }

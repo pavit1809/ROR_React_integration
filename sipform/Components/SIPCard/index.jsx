@@ -1,5 +1,6 @@
 import React from "react";
 import { Progress, Row, Col } from "antd";
+import { CardBody } from "./styles";
 // import { Pie } from "@ant-design/charts";
 
 export default function SIPCard(props) {
@@ -62,8 +63,7 @@ export default function SIPCard(props) {
         totalAmount: totalAmount,
         percent: percent,
       });
-    } 
-    else {
+    } else {
       investedValue = Math.round(
         parseFloat(monthlyInvestment) * 12 * parseInt(timePeriod)
       );
@@ -99,40 +99,22 @@ export default function SIPCard(props) {
   }, []);
 
   return (
-    <div
-      style={{
-        width: "90vw",
-        height: "20vw",
-        margin: "2vw 5vw 2vw 5vw",
-        border: "4px solid #1890ff",
-        borderRadius: "20px",
-        boxShadow: "4px 4px 4px 2px #888888",
-        backgroundColor: "white",
-      }}
-    >
+    <CardBody>
       <Row>
-        <Col style={{ margin: "5vw 0 0 2vw" }} span={6}>
+        <Col className="basic-details" span={6}>
           {props.operation === "sip" ? (
-            <div
-              style={{ width: "20vw", fontSize: "1.5vw", fontWeight: "350" }}
-            >
+            <div className="label">
               Monthly Investment:{" "}
-              <span style={{ fontWeight: "400" }}>
-                ₹ {SIPData.monthlyInvestment}
-              </span>
+              <span className="value">₹ {SIPData.monthlyInvestment}</span>
               <Progress
                 percent={parseFloat(SIPData.monthlyInvestment) / 2000}
                 format={() => "₹ 200000"}
               />
             </div>
           ) : (
-            <div
-              style={{ width: "20vw", fontSize: "1.5vw", fontWeight: "350" }}
-            >
+            <div className="label">
               Total Investment:{" "}
-              <span style={{ fontWeight: "400" }}>
-                ₹ {SIPData.totalInvestment}
-              </span>
+              <span className="value">₹ {SIPData.totalInvestment}</span>
               <Progress
                 percent={parseFloat(SIPData.totalInvestment) / 2000}
                 format={() => "₹ 200000"}
@@ -140,22 +122,21 @@ export default function SIPCard(props) {
             </div>
           )}
 
-          <div style={{ width: "20vw", fontSize: "1.5vw", fontWeight: "350" }}>
-            Time Period:{" "}
-            <span style={{ fontWeight: "400" }}>{SIPData.timePeriod} Yr </span>
+          <div className="label">
+            Time Period: <span className="value">{SIPData.timePeriod} Yr </span>
             <Progress
               percent={(parseFloat(SIPData.timePeriod) / 3) * 10}
               format={() => "30 Yr"}
             />
           </div>
         </Col>
-        <Col style={{ margin: "6vw 0 0 1vw" }} span={3}>
+        <Col className="rate" span={3}>
           <Progress
             type="circle"
             percent={parseFloat(SIPData.estReturnRate)}
             width={150}
             format={(percent) => (
-              <span style={{ fontSize: "1.1vw", fontWeight: "400" }}>
+              <span className="label">
                 Estimated <br />
                 Return <br />
                 Rate: {percent} %
@@ -163,37 +144,31 @@ export default function SIPCard(props) {
             )}
           />
         </Col>
-        <Col style={{ margin: "3vw 0 0 0", whiteSpace: "nowrap" }} span={5}>
-          <div style={{ width: "20vw", fontSize: "1.5vw", fontWeight: "350" }}>
+        <Col className="other-details" span={5}>
+          <div className="label">
             Invested Value:{" "}
-            <span style={{ fontWeight: "400" }}>₹ {SIPData.investedValue}</span>
+            <span className="value">₹ {SIPData.investedValue}</span>
           </div>
-          <div style={{ width: "20vw", fontSize: "1.5vw", fontWeight: "350" }}>
+          <div className="label">
             Expected Returns:{" "}
-            <span style={{ fontWeight: "400" }}>₹ {SIPData.expReturn}</span>
+            <span className="value">₹ {SIPData.expReturn}</span>
           </div>
-          <div style={{ width: "20vw", fontSize: "1.5vw", fontWeight: "350" }}>
-            Total Value :{" "}
-            <span style={{ fontWeight: "400" }}>₹ {SIPData.totalAmount}</span>
+          <div className="label">
+            Total Value : <span className="value">₹ {SIPData.totalAmount}</span>
           </div>
-          <div style={{ width: "20vw", fontSize: "1.5vw", fontWeight: "350" }}>
+          <div className="label">
             Date Of Application:{" "}
-            <span style={{ fontWeight: "400" }}>
-              {SIPData.dateOfApplication}
-            </span>
+            <span className="value">{SIPData.dateOfApplication}</span>
           </div>
-          <div style={{ width: "20vw", fontSize: "1.5vw", fontWeight: "350" }}>
+          <div className="label">
             Date Of Maturity:{" "}
-            <span style={{ fontWeight: "400" }}>{SIPData.dateOfMaturity}</span>
+            <span className="value">{SIPData.dateOfMaturity}</span>
           </div>
         </Col>
-        <Col
-          style={{ margin: "-3vw 0 0 5vw", whiteSpace: "nowrap", width: "5vw" }}
-          span={6}
-        >
+        <Col className="visualization" span={6}>
           {/* <Pie {...config} /> */}
         </Col>
       </Row>
-    </div>
+    </CardBody>
   );
 }

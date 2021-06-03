@@ -1,8 +1,10 @@
 import React from "react";
-import { Modal, Button, Row, Col, InputNumber, Slider } from "antd";
+import { Button, Row, Col, InputNumber, Slider } from "antd";
 import { useSelector } from "react-redux";
 import Axios from "axios";
 import { useRouter } from "next/router";
+import { StyledModal } from "./styles";
+import { StyledButton } from "../LoginDrawer/styles";
 
 export default function OptionsModal(props) {
   const [values, setValues] = React.useState({});
@@ -36,25 +38,17 @@ export default function OptionsModal(props) {
   }, [user]);
 
   return (
-    <Modal
+    <StyledModal
       title={
-        <span
-          style={{
-            fontSize: "1vw",
-            margin: "0 0 0 9vw",
-          }}
-        >
+        <span style={{ fontSize: "1.5vw", margin: "0 0 0 22vw" }}>
           Confirm the Details
         </span>
       }
       bodyStyle={{ backgroundColor: "#1890ff46", border: "2px solid #000000" }}
-      style={{ top: 150 }}
       visible={props.showDetails}
       onClose={() => props.setShowDetails(false)}
       footer={[
-        <Button onClick={cancelInvest} style={{ marginRight: 8 }}>
-          Cancel
-        </Button>,
+        <StyledButton onClick={cancelInvest}>Cancel</StyledButton>,
         <Button onClick={invest} type="primary">
           Proceed To Invest
         </Button>,
@@ -63,81 +57,25 @@ export default function OptionsModal(props) {
       width={1000}
     >
       {values.name ? (
-        <div
-          style={{
-            fontSize: "1.3vw",
-            color: "black",
-            fontWeight: "400",
-            textAlign: "center",
-          }}
-        >
-          Name:{" "}
-          <span
-            style={{
-              fontWeight: "450",
-            }}
-            onClick={() => router.push("/SignUp")}
-          >
-            {values.name}
-          </span>
+        <div className="styledDetails1">
+          Name: <span>{values.name}</span>
         </div>
       ) : null}
 
-      <div
-        style={{
-          fontSize: "1.3vw",
-          color: "black",
-          fontWeight: "400",
-          textAlign: "center",
-        }}
-      >
-        Email ID:{" "}
-        <span
-          style={{
-            fontWeight: "450",
-          }}
-          onClick={() => router.push("/SignUp")}
-        >
-          {values.email}
-        </span>
+      <div className="styledDetails1">
+        Email ID: <span>{values.email}</span>
       </div>
 
       {values.pan ? (
-        <div
-          style={{
-            fontSize: "1.3vw",
-            color: "black",
-            fontWeight: "400",
-            textAlign: "center",
-          }}
-        >
-          Pan Card Number:{" "}
-          <span
-            style={{
-              fontWeight: "450",
-            }}
-            onClick={() => router.push("/SignUp")}
-          >
-            {values.pan}
-          </span>
+        <div className="styledDetails1">
+          Pan Card Number: <span>{values.pan}</span>
         </div>
       ) : null}
 
-      <div style={{ margin: "2vw 0 0 10vw" }}>
-        <Col span={16} style={{ margin: " 0 0 0 2vw" }}>
-          <Row
-            style={{
-              marginTop: "1vw",
-            }}
-          >
-            <Col
-              style={{
-                marginLeft: "2vw",
-                fontSize: "1.2vw",
-                fontWeight: "400",
-              }}
-              span={16}
-            >
+      <div className="styledDetails2">
+        <Col span={16} className="col1">
+          <Row className="row1">
+            <Col className="heading" span={16}>
               {props.operation == "sip" ? "Monthly" : "Total"} Investment
             </Col>
             <Col span={4}>
@@ -145,7 +83,7 @@ export default function OptionsModal(props) {
                 min={5000}
                 max={200000}
                 step={5000}
-                style={{ margin: "0 16px", fontSize: "1vw", width: "9vw" }}
+                className="input"
                 value={
                   parseFloat(props.inputValue.amount) > 200000
                     ? "200,000"
@@ -170,22 +108,15 @@ export default function OptionsModal(props) {
             }
             readOnly
           />
-          <Row>
-            <Col
-              style={{
-                marginLeft: "2vw",
-                fontSize: "1.2vw",
-                fontWeight: "400",
-              }}
-              span={18}
-            >
+          <Row className="row2">
+            <Col className="heading" span={18}>
               Expected Return Rate
             </Col>
             <Col span={4}>
               <InputNumber
                 min={1}
                 max={30}
-                style={{ margin: "0 16px", fontSize: "1vw" }}
+                className="input"
                 value={props.inputValue.rate}
                 formatter={(value) => `${value}%`}
                 parser={(value) => value.replace("%", "")}
@@ -203,22 +134,15 @@ export default function OptionsModal(props) {
             }
             readOnly
           />
-          <Row>
-            <Col
-              style={{
-                marginLeft: "2vw",
-                fontSize: "1.2vw",
-                fontWeight: "400",
-              }}
-              span={18}
-            >
+          <Row className="row2">
+            <Col className="heading" span={18}>
               Time Period
             </Col>
             <Col span={4}>
               <InputNumber
                 min={1}
                 max={30}
-                style={{ margin: "0 16px", fontSize: "1vw" }}
+                className="input"
                 value={props.inputValue.time}
                 formatter={(value) => `${value} Yr`}
                 parser={(value) => value.replace("Yr", "")}
@@ -236,29 +160,10 @@ export default function OptionsModal(props) {
             }
             readOnly
           />
-          <Row
-            style={{
-              margin: "2vw 2vw 0 2vw",
-            }}
-          >
-            <Col
-              span={12}
-              type="flex"
-              style={{
-                fontSize: "1.3vw",
-                fontWeight: "400",
-              }}
-            >
-              <Row
-                style={{
-                  justifyContent: "center",
-                  fontSize: "1.1vw",
-                  fontWeight: "300",
-                }}
-              >
-                Invested Amount{" "}
-              </Row>
-              <Row style={{ justifyContent: "center" }}>
+          <Row className="row3">
+            <Col span={12} type="flex" className="container">
+              <Row className="label">Invested Amount </Row>
+              <Row className="value">
                 <b>
                   {props.inputValue.investedValue
                     ? `₹ ${props.inputValue.investedValue}`
@@ -266,23 +171,9 @@ export default function OptionsModal(props) {
                 </b>
               </Row>
             </Col>
-            <Col
-              span={12}
-              style={{
-                fontSize: "1.3vw",
-                fontWeight: "400",
-              }}
-            >
-              <Row
-                style={{
-                  justifyContent: "center",
-                  fontSize: "1.1vw",
-                  fontWeight: "300",
-                }}
-              >
-                Est. Returns{" "}
-              </Row>
-              <Row style={{ justifyContent: "center" }}>
+            <Col span={12} className="container">
+              <Row className="label">Est. Returns </Row>
+              <Row className="value">
                 <b>
                   {props.inputValue.expReturn
                     ? `₹ ${props.inputValue.expReturn}`
@@ -291,17 +182,9 @@ export default function OptionsModal(props) {
               </Row>
             </Col>
           </Row>
-          <Row style={{ margin: "1vw 2vw 2vw 10vw" }}>
-            <Col
-              span={22}
-              style={{
-                fontSize: "1.3vw",
-                fontWeight: "400",
-              }}
-            >
-              <span style={{ fontSize: "1.1vw", fontWeight: "300" }}>
-                Total Value{" "}
-              </span>
+          <Row className="row4">
+            <Col span={22} className="container">
+              <span className="label">Total Value </span>
               <b>
                 {props.inputValue.totalAmount
                   ? ` ₹ ${props.inputValue.totalAmount}`
@@ -311,7 +194,6 @@ export default function OptionsModal(props) {
           </Row>
         </Col>
       </div>
-
-    </Modal>
+    </StyledModal>
   );
 }

@@ -17,17 +17,8 @@ import { useRouter } from "next/router";
 import Axios from "axios";
 import OptionsModal from "../../Components/OptionsModal";
 import DetailsModal from "../../Components/DetailsModal";
+import { CalculatorBody } from "./styles";
 
-const InputHeading = {
-  marginLeft: "2vw",
-  fontSize: "1.2vw",
-  fontWeight: "400",
-};
-const CalculatedHeading = {
-  justifyContent: "center",
-  fontSize: "1vw",
-  fontWeight: "300",
-};
 export default function Calculator(props) {
   const [inputValue, setInputValue] = React.useState({
     amount: "25000",
@@ -181,14 +172,7 @@ export default function Calculator(props) {
   }, []);
 
   return (
-    <div
-      style={{
-        width: "100vw",
-        height: "100vh",
-        backgroundSize: "100vw 100vh",
-        paddingTop: "20vh",
-      }}
-    >
+    <CalculatorBody>
       <OptionsModal
         showOptions={showOptions}
         setShowOptions={setShowOptions}
@@ -202,30 +186,16 @@ export default function Calculator(props) {
         invest={invest}
         operation={operation}
       />
-      <div
-        style={{
-          width: "85vw",
-          margin: "0 6vw 20vh 7.5vw ",
-          height: "60vh",
-          border: "4px solid #1890ff",
-          borderRadius: "20px",
-          backgroundColor: "white",
-          boxShadow: "4px 4px 4px 2px #888888",
-        }}
-      >
-        <Divider style={{ fontSize: "2.5vw" }}>SIP Calculator</Divider>
+      <div className="content">
+        <Divider className="heading">SIP Calculator</Divider>
         <Row>
-          <Col span={12} style={{ margin: " 0 0 0 2vw" }}>
+          <Col span={12} className="details">
             <Radio.Group onChange={onOperationSwitch} value={operation}>
               <Radio value={"sip"}>SIP</Radio>
               <Radio value={"lumpsum"}>Lumpsum</Radio>
             </Radio.Group>
-            <Row
-              style={{
-                marginTop: "1vw",
-              }}
-            >
-              <Col style={InputHeading} span={16}>
+            <Row className="detail-topRow">
+              <Col className="heading" span={16}>
                 {operation == "sip" ? "Monthly" : "Total"} Investment
               </Col>
               <Col span={4}>
@@ -233,7 +203,7 @@ export default function Calculator(props) {
                   min={5000}
                   max={200000}
                   step={5000}
-                  style={{ margin: "0 16px", fontSize: "1vw", width: "9vw" }}
+                  className="input"
                   value={
                     parseFloat(inputValue.amount) > 200000
                       ? "200,000"
@@ -258,15 +228,15 @@ export default function Calculator(props) {
                   : 0
               }
             />
-            <Row>
-              <Col style={InputHeading} span={18}>
+            <Row className="detail-row">
+              <Col className="heading" span={18}>
                 Expected Return Rate
               </Col>
               <Col span={4}>
                 <InputNumber
                   min={1}
                   max={30}
-                  style={{ margin: "0 16px", fontSize: "1vw" }}
+                  className="input"
                   value={inputValue.rate}
                   formatter={(value) => `${value}%`}
                   parser={(value) => value.replace("%", "")}
@@ -284,15 +254,15 @@ export default function Calculator(props) {
                   : 0
               }
             />
-            <Row>
-              <Col style={InputHeading} span={18}>
+            <Row className="detail-row">
+              <Col className="heading" span={18}>
                 Time Period
               </Col>
               <Col span={4}>
                 <InputNumber
                   min={1}
                   max={30}
-                  style={{ margin: "0 16px", fontSize: "1vw" }}
+                  className="input"
                   value={inputValue.time}
                   formatter={(value) => `${value} Yr`}
                   parser={(value) => value.replace("Yr", "")}
@@ -310,21 +280,10 @@ export default function Calculator(props) {
                   : 0
               }
             />
-            <Row
-              style={{
-                margin: "2vw 2vw 0 2vw",
-              }}
-            >
-              <Col
-                span={10}
-                type="flex"
-                style={{
-                  fontSize: "1.3vw",
-                  fontWeight: "400",
-                }}
-              >
-                <Row style={CalculatedHeading}>Invested Amount </Row>
-                <Row style={{ justifyContent: "center" }}>
+            <Row className="calculated-details1">
+              <Col span={10} type="flex" className="container">
+                <Row className="label">Invested Amount </Row>
+                <Row className="value">
                   <b>
                     {inputValue.investedValue
                       ? `₹ ${inputValue.investedValue}`
@@ -332,32 +291,18 @@ export default function Calculator(props) {
                   </b>
                 </Row>
               </Col>
-              <Col
-                span={10}
-                style={{
-                  fontSize: "1.3vw",
-                  fontWeight: "400",
-                }}
-              >
-                <Row style={CalculatedHeading}>Est. Returns </Row>
-                <Row style={{ justifyContent: "center" }}>
+              <Col span={10} className="container">
+                <Row className="label">Est. Returns </Row>
+                <Row className="value">
                   <b>
                     {inputValue.expReturn ? `₹ ${inputValue.expReturn}` : null}
                   </b>
                 </Row>
               </Col>
             </Row>
-            <Row style={{ margin: "1vw 2vw 2vw 10vw" }}>
-              <Col
-                span={20}
-                style={{
-                  fontSize: "1.3vw",
-                  fontWeight: "400",
-                }}
-              >
-                <span style={{ fontSize: "1vw", fontWeight: "300" }}>
-                  Total Value{" "}
-                </span>
+            <Row className="calculated-details2">
+              <Col span={20} className="container">
+                <span className="label">Total Value </span>
                 <b>
                   {inputValue.totalAmount
                     ? ` ₹ ${inputValue.totalAmount}`
@@ -366,46 +311,27 @@ export default function Calculator(props) {
               </Col>
             </Row>
           </Col>
-          <Col
-            span={10}
-            style={{ width: "15vw", height: "20vw", margin: "0 0 0 0" }}
-          >
+          <Col span={10} className="visualization">
             {/* <Pie {...config} /> */}
             <Button
               type="primary"
               size="large"
               icon={<MoneyCollectOutlined />}
-              style={{
-                marginLeft: "9vw",
-              }}
+              className="styledButton"
               onClick={showAndConfirmDetails}
             >
               Invest Now
             </Button>
             {user === null ? (
-              <div
-                style={{
-                  fontSize: "1vw",
-                  color: "#696969",
-                  fontWeight: "350",
-                }}
-              >
+              <div className="info">
                 *To use this feature without any limits,{" "}
-                <span
-                  style={{
-                    fontWeight: "400",
-                    cursor: "pointer",
-                  }}
-                  onClick={() => router.push("/SignUp")}
-                >
-                  Login/SignUp
-                </span>{" "}
+                <span onClick={() => router.push("/SignUp")}>Login/SignUp</span>{" "}
                 to our site
               </div>
             ) : null}
           </Col>
         </Row>
       </div>
-    </div>
+    </CalculatorBody>
   );
 }

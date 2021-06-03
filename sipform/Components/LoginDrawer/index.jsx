@@ -1,9 +1,11 @@
 import React from "react";
-import { Drawer, Form, Button, Col, Row, Input ,Image} from "antd";
+import { Drawer, Form, Button, Col, Row, Input, Image } from "antd";
 import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
 import * as actionTypes from "../../Store/actions";
-import Axios from 'axios';
+import Axios from "axios";
+import { StyledButton, ButtonContainer, ImageContainer } from "./styles";
+import { ST } from "next/dist/next-server/lib/utils";
 
 export default function LoginDrawer(props) {
   const [values, setValues] = React.useState({});
@@ -23,19 +25,25 @@ export default function LoginDrawer(props) {
     setValues({ ...values, password: e.target.value });
   };
 
-  const login = async() => {
+  const login = async () => {
     //API Call to login user
-    await Axios.post("https://floating-escarpment-56394.herokuapp.com/api/v1/users/login", values)
-       .then((res) => {
-        console.log(res)
-        dispatch({ type: actionTypes.CHANGE_USER, user: {id: res.data.id,token: res.data.token,role:"user" }});       
+    await Axios.post(
+      "https://floating-escarpment-56394.herokuapp.com/api/v1/users/login",
+      values
+    )
+      .then((res) => {
+        console.log(res);
+        dispatch({
+          type: actionTypes.CHANGE_USER,
+          user: { id: res.data.id, token: res.data.token, role: "user" },
+        });
         router.push("/SIPCalculator");
-       })
-       .catch((err) => {
-         console.log("Axios error");
-       });
+      })
+      .catch((err) => {
+        console.log("Axios error");
+      });
   };
-  
+
   const loginClick = async () => {
     try {
       await form.validateFields();
@@ -57,18 +65,12 @@ export default function LoginDrawer(props) {
         visible={props.drawerShow}
         bodyStyle={{ paddingBottom: 80 }}
         footer={
-          <div
-            style={{
-              textAlign: "right",
-            }}
-          >
-            <Button onClick={onClose} style={{ marginRight: 8 }}>
-              Cancel
-            </Button>
+          <ButtonContainer>
+            <StyledButton onClick={onClose}>Cancel</StyledButton>
             <Button onClick={loginClick} type="primary">
               Login
             </Button>
-          </div>
+          </ButtonContainer>
         }
       >
         <Form form={form} layout="vertical" hideRequiredMark>
@@ -129,16 +131,9 @@ export default function LoginDrawer(props) {
             </Col>
           </Row>
         </Form>
-        <div
-          style={{
-            margin: "0 2vw 0 2vw",
-            overflow: "hidden",
-            width: "700",
-            height: "500",
-          }}
-        >
+        <ImageContainer>
           <Image src="/login.webp" width={700} height={500} />
-        </div>
+        </ImageContainer>
       </Drawer>
     </>
   );

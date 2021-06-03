@@ -2,6 +2,7 @@ import React from "react";
 import { Form, Input, Button, Divider, message, Progress } from "antd";
 import { EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons";
 import { RightOutlined, LeftOutlined } from "@ant-design/icons";
+import { FormBody } from "../styles";
 
 export default function AccountForm(props) {
   const [form] = Form.useForm();
@@ -24,35 +25,15 @@ export default function AccountForm(props) {
   }, []);
 
   return (
-    <div
-      style={{
-        width: "100vw",
-        height: "100vh",
-        backgroundSize: "100vw 100vh",
-        paddingTop: "20vh",
-      }}
-    >
-      <div
-        style={{
-          width: "50vw",
-          margin: "0 25vw 20vh 25vw ",
-          height: "60vh",
-          border: "4px solid #1890ff",
-          borderRadius: "20px",
-          boxShadow: "4px 4px 4px 2px #888888",
-        }}
-      >
-        <Divider style={{ fontSize: "2vw" }}>Account Details</Divider>
-        <div
-          style={{
-            margin: "0 0 0 22vw",
-          }}
-        >
+    <FormBody>
+      <div className="content">
+        <Divider className="heading">Account Details</Divider>
+        <div className="progress">
           <Progress size="large" percent={66} steps={3} />
         </div>
         <Form
           // form={form}
-          style={{ margin: "4vw 10vw 8vw 0 " }}
+          className="form"
           size="large"
           labelCol={{ span: 10 }}
           wrapperCol={{ span: 14 }}
@@ -169,6 +150,6 @@ export default function AccountForm(props) {
           </Form.Item>
         </Form>
       </div>
-    </div>
+    </FormBody>
   );
 }

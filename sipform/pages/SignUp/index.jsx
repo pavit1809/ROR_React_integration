@@ -1,8 +1,8 @@
 import React from "react";
 import Navbar from "../../Components/Navbar";
-import PersonalForm from "../../Components/PersonalForm";
-import AccountForm from "../../Components/AccountForm";
-import ContactForm from "../../Components/ContactForm";
+import PersonalForm from "../../Components/Forms/PersonalForm";
+import AccountForm from "../../Components/Forms/AccountForm";
+import ContactForm from "../../Components/Forms/ContactForm";
 import { useRouter } from "next/router";
 import Axios from "axios";
 

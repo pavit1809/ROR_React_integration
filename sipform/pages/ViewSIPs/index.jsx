@@ -13,6 +13,11 @@ import { useDispatch, useSelector } from "react-redux";
 import Axios from "axios";
 import { useRouter } from "next/router";
 import * as actionTypes from "../../Store/actions";
+import {
+  Container,
+  RadioContainer,
+  CardListContainer,
+} from "../../Assets/styles";
 
 export default function ViewSIPs() {
   const [operation, setOperation] = React.useState("sip");
@@ -82,7 +87,7 @@ export default function ViewSIPs() {
   }, [operation, user]);
 
   return (
-    <div style={bgstyle}>
+    <Container>
       <OptionsModal
         showOptions={showOptions}
         setShowOptions={setShowOptions}
@@ -102,25 +107,15 @@ export default function ViewSIPs() {
           }
         />
       ) : (
-        <div
-          style={{
-            margin: "5vw 40vw 0 40vw ",
-            padding: "1vw 1.5vw 1vw 2.5vw",
-            height: "3vw",
-            width: "14vw",
-            backgroundColor: "white",
-            borderRadius: "20px",
-            boxShadow: "4px 4px 4px 2px #888888",
-          }}
-        >
+        <RadioContainer>
           <Radio.Group onChange={onOperationSwitch} value={operation}>
             <Radio value={"sip"}>SIP</Radio>
             <Radio value={"lumpsum"}>Lumpsum</Radio>
           </Radio.Group>
-        </div>
+        </RadioContainer>
       )}
 
-      <div style={{ paddingTop: "5vw" }}>{cardsList}</div>
-    </div>
+      <CardListContainer>{cardsList}</CardListContainer>
+    </Container>
   );
 }

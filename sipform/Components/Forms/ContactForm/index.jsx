@@ -5,15 +5,15 @@ import {
   Button,
   Select,
   Divider,
-  Modal,
   Alert,
   message,
   Progress,
 } from "antd";
-import allStateDistrictData from "../../Assets/city-state-data.json";
-import statesData from "../../Assets/state-data.json";
+import allStateDistrictData from "../../../Assets/city-state-data.json";
+import statesData from "../../../Assets/state-data.json";
 import { LeftOutlined, LoginOutlined } from "@ant-design/icons";
 import { useRouter } from "next/router";
+import { ConfirmModal, FormBody } from "../styles";
 
 export default function ContactForm(props) {
   const [displayStates, setDisplayStates] = React.useState("");
@@ -22,7 +22,7 @@ export default function ContactForm(props) {
   const [modalShow, setModalShow] = React.useState(false);
   const [form] = Form.useForm();
   const router = useRouter();
-  
+
   const back = async () => {
     props.prevStep();
   };
@@ -76,17 +76,10 @@ export default function ContactForm(props) {
   }, []);
 
   return (
-    <div
-      style={{
-        width: "100vw",
-        height: "100vh",
-        backgroundSize: "100vw 100vh",
-        paddingTop: "20vh",
-      }}
+    <FormBody
     >
-      <Modal
+      <ConfirmModal
         title="Success"
-        style={{ top: 20 }}
         visible={modalShow}
         onOk={() => proceed()}
         footer={[
@@ -101,29 +94,16 @@ export default function ContactForm(props) {
           type="success"
           showIcon
         />
-      </Modal>
-      
-      <div
-        style={{
-          width: "50vw",
-          margin: "0 25vw 20vh 25vw ",
-          height: "60vh",
-          border: "4px solid #1890ff",
-          borderRadius: "20px",
-          boxShadow: "4px 4px 4px 2px #888888",
-        }}
-      >
-        <Divider style={{ fontSize: "2vw" }}>Contact Details</Divider>
-        <div
-          style={{
-            margin: "0 0 0 23vw",
-          }}
-        >
+      </ConfirmModal>
+
+      <div className="content">
+        <Divider className="heading">Contact Details</Divider>
+        <div className="progress">
           <Progress size="large" percent={100} steps={3} />
         </div>
         <Form
           // form={form}
-          style={{ margin: "4vw 10vw 8vw 0 " }}
+          className="form"
           size="large"
           labelCol={{ span: 10 }}
           wrapperCol={{ span: 14 }}
@@ -219,6 +199,6 @@ export default function ContactForm(props) {
           </Form.Item>
         </Form>
       </div>
-    </div>
+    </FormBody>
   );
 }

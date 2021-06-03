@@ -11,8 +11,7 @@ import { Menu, Layout } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import * as actionTypes from "../../Store/actions";
 import Axios from "axios";
-
-const { Header } = Layout;
+import { StyledHeader,StyledMenuItem ,RightAlignedMenuItem} from "./styles";
 
 export default function Navbar(props) {
   const dispatch = useDispatch();
@@ -26,7 +25,10 @@ export default function Navbar(props) {
 
   const logout = async () => {
     //API Call to logout
-    await Axios.post("https://floating-escarpment-56394.herokuapp.com/api/v1/users/logout", user)
+    await Axios.post(
+      "https://floating-escarpment-56394.herokuapp.com/api/v1/users/logout",
+      user
+    )
       .then((res) => {
         console.log(res);
         dispatch({ type: actionTypes.CHANGE_USER, user: null });
@@ -44,60 +46,54 @@ export default function Navbar(props) {
 
   return (
     <Layout>
-      <Header style={{ position: "fixed", zIndex: 1, width: "100%" }}>
+      <StyledHeader >
         <Menu
           onClick={handleClick}
           theme="dark"
           selectedKeys={[current]}
           mode="horizontal"
         >
-          <Menu.Item
+          <StyledMenuItem
             key="home"
             icon={<HomeOutlined style={{ fontSize: "1.3vw" }} />}
             onClick={() => router.push("/")}
-            style={{ cursor: "pointer", fontSize: "1.3vw" }}
           >
             Home
-          </Menu.Item>
-          <Menu.Item
+          </StyledMenuItem>
+          <StyledMenuItem
             key="sipcalci"
             icon={<CalculatorOutlined style={{ fontSize: "1.3vw" }} />}
             onClick={() => router.push("/SIPCalculator")}
-            style={{ cursor: "pointer", fontSize: "1.3vw" }}
           >
             SIP Calculator
-          </Menu.Item>
-          <Menu.Item
+          </StyledMenuItem>
+          <StyledMenuItem
             key="viewsip"
             icon={<FundViewOutlined style={{ fontSize: "1.3vw" }} />}
             onClick={() => router.push("/ViewSIPs")}
-            style={{ cursor: "pointer", fontSize: "1.3vw" }}
           >
             View your SIPs
-          </Menu.Item>
-          
+          </StyledMenuItem>
+
           {user === null ? (
-            <Menu.Item
+            <RightAlignedMenuItem
               key="signup"
               icon={<LoginOutlined style={{ fontSize: "1.3vw" }} />}
               onClick={() => router.push("/SignUp")}
-              style={{ cursor: "pointer", fontSize: "1.3vw", float: "right" }}
             >
               Login/SignUp
-            </Menu.Item>
+            </RightAlignedMenuItem>
           ) : (
-            <Menu.Item
+            <RightAlignedMenuItem
               key="logout"
               icon={<LogoutOutlined style={{ fontSize: "1.3vw" }} />}
               onClick={logout}
-              style={{ cursor: "pointer", fontSize: "1.3vw", float: "right" }}
             >
               Logout
-            </Menu.Item>
+            </RightAlignedMenuItem>
           )}
-        
         </Menu>
-      </Header>
+      </StyledHeader>
     </Layout>
   );
 }

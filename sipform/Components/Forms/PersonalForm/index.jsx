@@ -10,7 +10,9 @@ import {
 } from "antd";
 import moment from "moment";
 import { RightOutlined } from "@ant-design/icons";
-import LoginDrawer from "../LoginDrawer";
+import { FormBody } from "../styles";
+import LoginDrawer from "../../LoginDrawer";
+
 export default function PersonalForm(props) {
   const [form] = Form.useForm();
   const [drawerShow, setDrawerShow] = React.useState(false);
@@ -34,38 +36,18 @@ export default function PersonalForm(props) {
   }, []);
 
   return (
-    <div
-      style={{
-        width: "100vw",
-        height: "100vh",
-        backgroundSize: "100vw 100vh",
-        paddingTop: "20vh",
-      }}
-    >
-      <div
-        style={{
-          width: "50vw",
-          margin: "0 25vw 20vh 25vw ",
-          height: "60vh",
-          border: "4px solid #1890ff",
-          borderRadius: "20px",
-          boxShadow: "4px 4px 4px 2px #888888",
-        }}
-      >
+    <FormBody>
+      <div className="content">
         {drawerShow ? (
           <LoginDrawer setDrawerShow={setDrawerShow} drawerShow={drawerShow} />
         ) : null}
-        <Divider style={{ fontSize: "2vw" }}>Personal Details</Divider>
-        <div
-          style={{
-            margin: "0 0 0 22vw",
-          }}
-        >
+        <Divider className="heading">Personal Details</Divider>
+        <div className="progress">
           <Progress size="large" percent={33} steps={3} />
         </div>
         <Form
           // form={form}
-          style={{ margin: "4vw 10vw 8vw 0 " }}
+          className="form"
           size="large"
           labelCol={{ span: 10 }}
           wrapperCol={{ span: 14 }}
@@ -151,13 +133,7 @@ export default function PersonalForm(props) {
             </Button>
           </Form.Item>
           <div
-            style={{
-              fontSize: "1vw",
-              fontWeight: "350",
-              color: "#696969",
-              margin: "0 0 0 21vw",
-              cursor: "pointer",
-            }}
+            className="existingUser"
             onClick={() => {
               setDrawerShow(true);
             }}
@@ -166,6 +142,6 @@ export default function PersonalForm(props) {
           </div>
         </Form>
       </div>
-    </div>
+    </FormBody>
   );
 }
