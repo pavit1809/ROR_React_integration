@@ -1,6 +1,5 @@
 require_relative './UserHelper'
 module InvestmentHelper
-
   def self.generate_response(success, status, message, response)
     {
       success: success,
@@ -11,15 +10,21 @@ module InvestmentHelper
   end
 
   def self.predicted_sip(investment, rate, time)
+    time *= 12
     first_factor = ((1 + ((rate / 100) / 12))**time) - 1
     second_factor = ((1 + ((rate / 100) / 12)) / ((rate / 100) / 12))
     ((investment * first_factor * second_factor).round - (investment * time))
   end
 
+  def self.predicted_lumpsum(investment, rate, time)
+    (investment * ((1 + (rate / 100))**time)).round - investment
+  end
+
   def self.compare_inputs?(params)
-    params[:data][:estimatedReturn] == predicted_sip(params[:data][:monthlyInvestment],
-                                                     params[:data][:estReturnRate],
-                                                     params[:data][:timePeriod] * 12)
+    if params[:mode] == 'sip'
+      params[:estimatedReturn] == predicted_sip(params[:monthlyInvestment], params[:estReturnRate], params[:timePeriod])
+    end
+    params[:estimatedReturn] == predicted_lumpsum(params[:totalInvestment], params[:estReturnRate], params[:timePeriod])
   end
 
   def self.hash_helper(params)
@@ -45,11 +50,10 @@ module InvestmentHelper
       return false
     end
 
-    compare_inputs?(params)
+    compare_inputs?(params[:data])
   end
 
   def self.check_investment_validity(investment)
-
     validity_status = investment.valid?
     investment.save if validity_status
     generate_response(validity_status, validity_status == true ? 201 : 400,
@@ -71,5 +75,4 @@ module InvestmentHelper
     current_user = User.find_by(id: params[:id])
     current_user.investments.where(mode: params[:mode])
   end
-
 end
