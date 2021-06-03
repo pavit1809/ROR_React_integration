@@ -44,7 +44,7 @@ module UserHelper
   end
 
   def self.check_for_existing_user?(params)
-    fetched_user = User.find_by(email: params[:email])
+    fetched_user = User.find_by(email: params[:email],role: params[:role])
     !fetched_user.nil?
   end
 
